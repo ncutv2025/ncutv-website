@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>NCUTV | 中央大學小中大電視台</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        ncu: {
+                            black: '#050505',
+                            panel: '#111111',
+                            text: '#e5e5e5',
+                            sub: '#a3a3a3',
+                            accent: '#C0A062',
+                            red: '#e11d48',
+                            blue: '#3b82f6'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Noto Sans TC', 'sans-serif'],
+                        mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'monospace'],
+                    },
+                    fontSize: {
+                        'base': '1.125rem',
+                        'lg': '1.25rem',
+                        'xl': '1.5rem',
+                        '2xl': '1.875rem',
+                        '3xl': '2.25rem',
+                        '4xl': '3rem',
+                        '5xl': '4rem',
+                        'huge': '9rem',
+                    },
+                    animation: {
+                        'grain': 'grain 8s steps(10) infinite',
+                        'slide-up': 'slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        grain: {
+                            '0%, 100%': { transform: 'translate(0, 0)' },
+                            '10%': { transform: 'translate(-5%, -10%)' },
+                            '90%': { transform: 'translate(-10%, 10%)' }
+                        },
+                        slideUp: {
+                            '0%': { opacity: '0', transform: 'translateY(40px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap');
+
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #050505;
+            color: #ffffff;
+            overflow-x: hidden;
+            font-size: 18px;
+            line-height: 1.6;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .bg-noise {
+            position: fixed; top: -50%; left: -50%; width: 200%; height: 200%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
+            animation: grain 8s steps(10) infinite;
+            pointer-events: none;
+            z-index: 50;
+        }
+
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        .vol-card { transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .vol-card:hover { transform: translateY(-15px); box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.9); border-color: #C0A062; }
+        .vol-card:hover .vol-img { transform: scale(1.1); filter: grayscale(0%); }
+
+        .timeline-line {
+            position: absolute; left: 23px; top: 15px; bottom: 0; width: 4px;
+            background: linear-gradient(to bottom, #333 0%, #333 90%, transparent 100%);
+        }
+        .timeline-item { position: relative; padding-left: 80px; padding-bottom: 60px; opacity: 0; }
+        .timeline-dot {
+            position: absolute; left: 15px; top: 10px; width: 20px; height: 20px;
+            background: #050505; border: 4px solid #666; border-radius: 50%; z-index: 10;
+            transition: all 0.3s;
+        }
+        .timeline-item:hover .timeline-dot { background: #C0A062; border-color: #C0A062; box-shadow: 0 0 25px rgba(192, 160, 98, 0.7); }
+        
+        .timeline-content {
+            background: #111; border: 1px solid #222; padding: 2rem; border-radius: 1rem;
+            transition: all 0.3s;
+        }
+        .timeline-item:hover .timeline-content { border-color: #666; background: #1a1a1a; transform: translateX(10px); }
+
+        .class-card {
+            background: #111; border: 1px solid #222; padding: 1.5rem; border-radius: 0.75rem;
+            transition: all 0.3s;
+        }
+        .class-card:hover { border-color: #C0A062; background: #161616; transform: translateY(-5px); }
+
+        .hero-banner {
+            position: relative; width: 100%; height: 350px; overflow: hidden;
+            border-radius: 1rem; margin-bottom: 2rem; border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .hero-img {
+            width: 100%; height: 100%; object-fit: cover; transition: transform 10s ease;
+        }
+        /* .hero-banner:hover .hero-img { transform: scale(1.05); }動畫 */
+
+        .modal-overlay {
+            background-color: rgba(5, 5, 5, 0.95);
+            backdrop-filter: blur(10px);
+            cursor: pointer;
+        }
+        .modal-content {
+            cursor: default; 
+        }
+        
+        .gear-card {
+            background: linear-gradient(145deg, #111, #0a0a0a);
+            border: 1px solid #222;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+        .gear-card:hover { border-color: #C0A062; transform: translateY(-5px); }
+        .gear-img-container {
+            width: 100%;
+            height: 200px;
+            background-color: #050505;
+            border-bottom: 1px solid #222;
+            overflow: hidden;
+        }
+        .gear-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.8;
+            transition: all 0.5s ease;
+        }
+        .gear-card:hover .gear-img { opacity: 1; transform: scale(1.05); }
+
+    </style>
+</head>
+
+<body class="antialiased selection:bg-ncu-accent selection:text-black">
+
+    <div class="bg-noise"></div>
+
+    <main id="view-gallery" class="relative z-10 min-h-screen p-6 md:p-16 flex flex-col transition-all duration-700">
+
+        <header class="mb-12 animate-slide-up">
+            <div class="flex items-center justify-between mb-8">
+                <div class="flex items-center gap-6">
+                    <div class="relative w-4 h-4">
+                        <div class="absolute inset-0 bg-ncu-red rounded-full animate-ping opacity-75"></div>
+                        <div class="relative w-4 h-4 bg-ncu-red rounded-full shadow-[0_0_15px_rgba(225,29,72,0.8)]"></div>
+                    </div>
+                    <span class="text-ncu-accent font-mono text-base tracking-[0.4em] uppercase font-bold animate-pulse-slow">ON AIR</span>
+                </div>
+                <div class="text-ncu-accent font-mono text-sm tracking-widest border border-ncu-accent px-3 py-1 rounded animate-pulse">熱烈招募中</div>
+            </div>
+
+            <div class="hero-banner group">
+                <img id="home-banner-img" src="" alt="Banner" class="hero-img opacity-60 group-hover:opacity-80 transition-opacity duration-700">
+                
+                <div class="absolute inset-0 bg-gradient-to-r from-black via-black/50 to-transparent flex flex-col justify-center px-6 md:px-20">
+                    <h1 class="text-6xl md:text-9xl font-black text-white tracking-tighter leading-none mb-4 drop-shadow-2xl">
+                        小中大電視台
+                    </h1>
+                    <p class="text-ncu-sub text-lg md:text-2xl tracking-wide font-light border-l-4 border-ncu-accent pl-6">
+                        一幀一畫，小中見大。
+                    </p>
+                </div>
+
+                <div class="absolute bottom-6 left-6 right-6 md:left-auto md:bottom-12 md:right-12 z-20 flex flex-col md:flex-row gap-3 md:gap-4 items-stretch md:items-center">
+                    <a href="https://www.surveycake.com/s/78noe" target="_blank" class="px-6 py-3 md:px-8 md:py-4 bg-white text-black font-bold tracking-[0.1em] rounded-full hover:bg-gray-200 hover:scale-105 transition-all shadow-[0_0_20px_rgba(255,255,255,0.4)] flex items-center justify-center gap-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                        </svg>
+                        <span>出隊申請 (SERVICE)</span>
+                    </a>
+
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfzCmAK9mto3YTna2X3imiQk5MGH3bAsGIXtL0ApUuh7DADhQ/viewform?usp=dialog" target="_blank" class="px-8 py-3 md:px-10 md:py-4 bg-ncu-accent text-black font-black tracking-[0.15em] rounded-full hover:bg-white hover:scale-105 transition-all shadow-[0_0_20px_rgba(192,160,98,0.6)] flex items-center justify-center gap-3">
+                        <span>加入我們 (JOIN US)</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <div class="flex flex-wrap gap-4 animate-slide-up" style="animation-delay: 0.1s;">
+                <button onclick="openModal('modal-about')" class="px-8 py-3 bg-white/5 border border-white/20 hover:border-ncu-accent hover:text-ncu-accent hover:bg-white/10 rounded-full transition-all tracking-[0.2em] font-bold text-sm uppercase flex items-center gap-2 group shadow-[0_0_15px_rgba(192,160,98,0.3)]">
+                    <svg class="w-4 h-4 group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    關於我們
+                </button>
+                <button onclick="openModal('modal-gear')" class="px-8 py-3 bg-white/5 border border-white/20 hover:border-ncu-accent hover:text-ncu-accent hover:bg-white/10 rounded-full transition-all tracking-[0.2em] font-bold text-sm uppercase flex items-center gap-2 group">
+                    <svg class="w-4 h-4 group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                    器材軍火庫
+                </button>
+            </div>
+        </header>
+
+        <h3 class="text-ncu-sub text-sm font-bold tracking-[0.2em] uppercase mb-6 pl-2 border-l-2 border-ncu-sub">歷屆傳承 (Legacy)</h3>
+        <div id="gallery-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12 w-full pb-20">
+        </div>
+
+        <footer class="mt-auto pt-20 border-t border-white/10 bg-[#0a0a0a]">
+            <div class="max-w-7xl mx-auto px-6 md:px-12 pb-16 grid grid-cols-1 md:grid-cols-4 gap-12">
+                <div class="md:col-span-1">
+                    <div class="text-ncu-accent font-black text-2xl tracking-widest mb-4">NCUTV</div>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-4">
+                        實戰導向，敘事與意象並重。<br>
+                        鏡頭下的故事，我們來說。<br>
+                        我們正在找熱愛影像創作的你！
+
+                    </p>
+                    <div class="flex items-center gap-2 text-ncu-sub text-sm">
+                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                        <span>桃園市中壢區中大路300號</span>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-bold tracking-widest uppercase mb-6 border-b border-white/10 pb-2 inline-block">Explore</h4>
+                    <ul class="space-y-3 text-sm text-gray-400">
+                        <li><button onclick="openModal('modal-about')" class="hover:text-ncu-accent transition-colors">關於我們 (About)</button></li>
+                        <li><button onclick="openModal('modal-gear')" class="hover:text-ncu-accent transition-colors">器材清單 (Gear)</button></li>
+                        <li><a href="#" class="hover:text-ncu-accent transition-colors">歷屆作品 (Works)</a></li>
+                        <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSfzCmAK9mto3YTna2X3imiQk5MGH3bAsGIXtL0ApUuh7DADhQ/viewform?usp=dialog" class="hover:text-ncu-accent transition-colors">加入我們 (Join)</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-bold tracking-widest uppercase mb-6 border-b border-white/10 pb-2 inline-block">Links</h4>
+                    <ul class="space-y-3 text-sm text-gray-400">
+                        <li><a href="https://www.ncu.edu.tw/" target="_blank" class="hover:text-ncu-accent transition-colors">國立中央大學 (NCU)</a></li>
+                        <li><a href="https://club.adm.ncu.edu.tw/" target="_blank" class="hover:text-ncu-accent transition-colors">課外活動組</a></li>
+                        <li><a href="https://www.surveycake.com/s/78noe" target="_blank" class="hover:text-ncu-accent transition-colors">服務申請表單</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-bold tracking-widest uppercase mb-6 border-b border-white/10 pb-2 inline-block">Follow Us</h4>
+                    <div class="flex gap-4">
+                        <a href="https://www.instagram.com/ncu_tv" target="_blank" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-ncu-accent hover:text-black transition-all">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                        </a>
+                        <a href="https://www.facebook.com/NCUTVsince2010/" target="_blank" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-ncu-accent hover:text-black transition-all">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.962.925-1.962 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                        </a>
+                        <a href="https://www.youtube.com/@NCUTV" target="_blank" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-ncu-accent hover:text-black transition-all">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-white/5 py-8 text-center text-ncu-sub text-sm tracking-widest uppercase bg-black">
+                © 2010-2026 NCUTV. All Rights Reserved.
+            </div>
+        </footer>
+    </main>
+
+    <div id="view-detail" class="fixed inset-0 bg-[#050505] z-50 overflow-y-auto hidden opacity-0 transition-opacity duration-500">
+        <div id="detail-bg" class="fixed top-0 left-0 w-full h-[60vh] bg-cover bg-center opacity-10 mask-image-gradient pointer-events-none" style="mask-image: linear-gradient(to bottom, black, transparent);"></div>
+        
+        <nav class="fixed top-0 left-0 w-full z-50 h-28 bg-[#050505]/80 backdrop-blur-md border-b border-white/5 flex items-center justify-between px-6 md:px-10">
+            <button onclick="closeDetail()" class="flex items-center gap-5 text-ncu-sub hover:text-white transition-colors group py-4">
+                <div class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center group-hover:border-white transition-colors bg-black/50">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" /></svg>
+                </div>
+                <span class="text-lg font-mono tracking-widest uppercase group-hover:translate-x-1 transition-transform">Back</span>
+            </button>
+            <div class="text-ncu-accent font-bold tracking-widest text-xl">NCUTV</div>
+        </nav>
+
+        <div class="container mx-auto px-6 md:px-12 pt-48 pb-40 relative z-10">
+            <header class="mb-40 grid grid-cols-1 lg:grid-cols-12 gap-20 items-end border-b border-white/10 pb-24">
+                <div class="lg:col-span-7">
+                    <span class="text-ncu-red font-mono text-lg tracking-widest mb-8 flex items-center gap-4">
+                        <span class="w-4 h-4 bg-ncu-red rounded-full animate-pulse shadow-[0_0_20px_#e11d48]"></span> PROJECT FILE
+                    </span>
+                    <h2 id="detail-vol" class="text-5xl md:text-huge font-black text-white leading-none tracking-tighter -ml-2 mb-6 drop-shadow-2xl">VOL.16</h2>
+                    <h3 id="detail-year" class="text-3xl md:text-6xl text-ncu-sub font-mono font-light">2025-2026</h3>
+                </div>
+                <div class="lg:col-span-5 lg:pl-12">
+                    <h4 class="text-ncu-accent text-lg font-bold tracking-[0.3em] uppercase mb-10 border-l-4 border-ncu-accent pl-6">製作團隊 (Crew)</h4>
+                    <p id="detail-leader" class="text-white text-3xl leading-relaxed whitespace-pre-line font-light"></p>
+                </div>
+            </header>
+
+            <div class="grid grid-cols-1 xl:grid-cols-12 gap-24">
+                <div class="xl:col-span-7">
+                    <h3 class="text-3xl font-bold text-white tracking-widest uppercase mb-16 flex items-center gap-5">
+                        <svg class="w-8 h-8 text-ncu-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        年度大事記 (Timeline)
+                    </h3>
+                    <div class="relative pl-4">
+                        <div class="timeline-line"></div>
+                        <div id="timeline-list"></div>
+                    </div>
+                </div>
+                <div class="xl:col-span-5 space-y-32">
+                    <div id="section-works" class="hidden">
+                        <h3 class="text-lg font-bold text-ncu-sub tracking-[0.3em] uppercase mb-10 border-b border-white/10 pb-4">精選作品 (Works)</h3>
+                        <div id="works-grid" class="grid gap-12"></div>
+                    </div>
+                    <div id="section-classes" class="hidden">
+                        <h3 class="text-lg font-bold text-ncu-sub tracking-[0.3em] uppercase mb-10 border-b border-white/10 pb-4">社課紀錄 (Classes)</h3>
+                        <div id="classes-list" class="space-y-6"></div>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-ncu-sub tracking-[0.3em] uppercase mb-10 border-b border-white/10 pb-4">成員名單 (Crew List)</h3>
+                        <div id="members-list" class="flex flex-wrap gap-4"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-about" class="fixed inset-0 modal-overlay z-[60] hidden flex items-center justify-center p-4" onclick="if(event.target === this) closeModal('modal-about')">
+        <div class="bg-[#111] border border-white/20 w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-xl relative animate-slide-up modal-content">
+            <button onclick="closeModal('modal-about')" class="absolute top-6 right-6 text-gray-500 hover:text-white p-2 hover:bg-white/10 rounded-full transition-colors"><svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg></button>
+            <div class="p-10 md:p-16">
+                <div class="text-center mb-16">
+                    <h3 class="text-ncu-accent text-sm font-bold tracking-[0.4em] uppercase mb-6">Manifesto</h3>
+                    <h2 class="text-3xl md:text-5xl font-black text-white mb-6 leading-tight">實戰導向。<br>敘事與意象並重。<br>小題，才能大作。</h2>
+                    <div class="w-24 h-1 bg-ncu-red mx-auto"></div>
+                </div>
+
+                <div class="mb-16">
+                    <h3 class="text-ncu-accent text-sm font-bold tracking-[0.2em] uppercase mb-6 border-l-4 border-ncu-accent pl-4">What We Do</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-white/5 p-6 rounded-lg border border-white/5 hover:border-ncu-accent/30 transition-colors">
+                            <h4 class="text-white font-bold text-xl mb-2 flex items-center gap-2">🎬 企劃導演</h4>
+                            <p class="text-ncu-sub text-sm">腳本發想、分鏡繪製、影片風格定調。</p>
+                        </div>
+                        <div class="bg-white/5 p-6 rounded-lg border border-white/5 hover:border-ncu-accent/30 transition-colors">
+                            <h4 class="text-white font-bold text-xl mb-2 flex items-center gap-2">🎥 攝影燈光</h4>
+                            <p class="text-ncu-sub text-sm">專業攝影機操作、運鏡構圖、現場光影佈置。</p>
+                        </div>
+                        <div class="bg-white/5 p-6 rounded-lg border border-white/5 hover:border-ncu-accent/30 transition-colors">
+                            <h4 class="text-white font-bold text-xl mb-2 flex items-center gap-2">🖥️ 後製剪輯</h4>
+                            <p class="text-ncu-sub text-sm">Davinci剪輯、調色與音效。</p>
+                        </div>
+                        <div class="bg-white/5 p-6 rounded-lg border border-white/5 hover:border-ncu-accent/30 transition-colors">
+                            <h4 class="text-white font-bold text-xl mb-2 flex items-center gap-2">📡 現場導播</h4>
+                            <p class="text-ncu-sub text-sm">大型活動多機轉播、OBS 直播串流設定。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+                    <div class="bg-white/5 p-6 rounded-lg border border-white/5">
+                        <h4 class="text-ncu-accent font-bold mb-3 text-lg">Q: 我沒有單眼相機可以加入嗎？</h4>
+                        <p class="text-gray-300">A: 可以的！社團有完整器材庫供你使用。</p>
+                    </div>
+                    <div class="bg-white/5 p-6 rounded-lg border border-white/5">
+                        <h4 class="text-ncu-accent font-bold mb-3 text-lg">Q: 會不會很花時間？</h4>
+                        <p class="text-gray-300">A: 我們是專案制，想接就接，不強迫出隊。</p>
+                    </div>
+                    <div class="bg-white/5 p-6 rounded-lg border border-white/5">
+                        <h4 class="text-ncu-accent font-bold mb-3 text-lg">Q: 只有大一能加嗎？</h4>
+                        <p class="text-gray-300">A: 歡迎各年級老屁股。</p>
+                    </div>
+                    <div class="bg-white/5 p-6 rounded-lg border border-white/5">
+                        <h4 class="text-ncu-accent font-bold mb-3 text-lg">Q: 沒有基礎怎麼辦？</h4>
+                        <p class="text-gray-300">A: 很多學長姐也是從零開始的喔~ 大家也很願意幫忙，不懂的就問。</p>
+                    </div>
+                </div>
+
+                <div class="flex flex-col md:flex-row gap-6 justify-center">
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfzCmAK9mto3YTna2X3imiQk5MGH3bAsGIXtL0ApUuh7DADhQ/viewform?usp=dialog" target="_blank" class="px-8 py-4 bg-ncu-accent text-black font-bold tracking-[0.2em] rounded hover:bg-white transition-colors text-center shadow-lg shadow-ncu-accent/20">
+                        JOIN THE CREW (填寫表單)
+                    </a>
+                    <a href="https://www.instagram.com/ncu_tv?igsh=MXB4ZWV5bnQzdHNzNQ==" target="_blank" class="px-8 py-4 border border-white text-white font-bold tracking-[0.2em] rounded hover:bg-white hover:text-black transition-colors text-center">
+                        INSTAGRAM (私訊我們)
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-gear" class="fixed inset-0 modal-overlay z-[60] hidden flex items-center justify-center p-4" onclick="if(event.target === this) closeModal('modal-gear')">
+        <div class="bg-[#111] border border-white/20 w-full max-w-6xl max-h-[90vh] overflow-y-auto rounded-xl relative animate-slide-up modal-content">
+            <button onclick="closeModal('modal-gear')" class="absolute top-6 right-6 text-gray-500 hover:text-white p-2 hover:bg-white/10 rounded-full transition-colors z-50"><svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg></button>
+            <div class="p-10 md:p-16">
+                <h2 class="text-4xl font-black text-white tracking-tighter mb-2">器材軍火庫 (GEAR)</h2>
+                <p class="text-ncu-sub mb-10 border-l-4 border-ncu-accent pl-4 text-xl">工欲善其事，必先利其器。NCUTV 器材庫部分精選。</p>
+                
+                <div id="gear-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const SITE_CONFIG = {
+            bannerUrl: "https://yt3.googleusercontent.com/34nG-zt7IjCMtUo9iC6xptHKC2WVn1L3FWr72d4TNtp6otb1POw-739KAXc4ZHgWFgWGe0_y=w1707-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj",
+        };
+
+        const IMAGE_ASSETS = {
+            16: "https://drive.google.com/file/d/1EM3yYrF33fTXe7ikTgGhx_F0dK_X9hov/view?usp=sharing",
+            1: "https://scontent.ftpe7-4.fna.fbcdn.net/v/t39.30808-6/505493465_10009415832474727_7816058211966207215_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=a5f93a&_nc_ohc=OQhkLgg4mSkQ7kNvwGAy5Yf&_nc_oc=Adl-XrBimFOYC2Z-dEYig6mgwADsXwYL2lDV0_RRyilAupa6tc7x3ZpJ8srAOPEZwok&_nc_zt=23&_nc_ht=scontent.ftpe7-4.fna&_nc_gid=sgtB-SD8zu_jmOdBRNJG3w&oh=00_AfvTCJP6N6Yu3yawFgRX-HDK9l47KLkgp9kYHQgiob5DQQ&oe=6989062F",
+            2: "https://scontent.ftpe7-4.fna.fbcdn.net/v/t39.30808-6/505493465_10009415832474727_7816058211966207215_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=a5f93a&_nc_ohc=OQhkLgg4mSkQ7kNvwGAy5Yf&_nc_oc=Adl-XrBimFOYC2Z-dEYig6mgwADsXwYL2lDV0_RRyilAupa6tc7x3ZpJ8srAOPEZwok&_nc_zt=23&_nc_ht=scontent.ftpe7-4.fna&_nc_gid=sgtB-SD8zu_jmOdBRNJG3w&oh=00_AfvTCJP6N6Yu3yawFgRX-HDK9l47KLkgp9kYHQgiob5DQQ&oe=6989062F",
+            3: "https://scontent.ftpe7-4.fna.fbcdn.net/v/t39.30808-6/505493465_10009415832474727_7816058211966207215_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=a5f93a&_nc_ohc=OQhkLgg4mSkQ7kNvwGAy5Yf&_nc_oc=Adl-XrBimFOYC2Z-dEYig6mgwADsXwYL2lDV0_RRyilAupa6tc7x3ZpJ8srAOPEZwok&_nc_zt=23&_nc_ht=scontent.ftpe7-4.fna&_nc_gid=sgtB-SD8zu_jmOdBRNJG3w&oh=00_AfvTCJP6N6Yu3yawFgRX-HDK9l47KLkgp9kYHQgiob5DQQ&oe=6989062F",
+            4: "https://scontent.ftpe7-4.fna.fbcdn.net/v/t39.30808-6/505493465_10009415832474727_7816058211966207215_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=a5f93a&_nc_ohc=OQhkLgg4mSkQ7kNvwGAy5Yf&_nc_oc=Adl-XrBimFOYC2Z-dEYig6mgwADsXwYL2lDV0_RRyilAupa6tc7x3ZpJ8srAOPEZwok&_nc_zt=23&_nc_ht=scontent.ftpe7-4.fna&_nc_gid=sgtB-SD8zu_jmOdBRNJG3w&oh=00_AfvTCJP6N6Yu3yawFgRX-HDK9l47KLkgp9kYHQgiob5DQQ&oe=6989062F",
+            5: "https://scontent.ftpe7-4.fna.fbcdn.net/v/t39.30808-6/505493465_10009415832474727_7816058211966207215_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=a5f93a&_nc_ohc=OQhkLgg4mSkQ7kNvwGAy5Yf&_nc_oc=Adl-XrBimFOYC2Z-dEYig6mgwADsXwYL2lDV0_RRyilAupa6tc7x3ZpJ8srAOPEZwok&_nc_zt=23&_nc_ht=scontent.ftpe7-4.fna&_nc_gid=sgtB-SD8zu_jmOdBRNJG3w&oh=00_AfvTCJP6N6Yu3yawFgRX-HDK9l47KLkgp9kYHQgiob5DQQ&oe=6989062F",
+            6: "https://scontent.ftpe7-4.fna.fbcdn.net/v/t39.30808-6/505493465_10009415832474727_7816058211966207215_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=a5f93a&_nc_ohc=OQhkLgg4mSkQ7kNvwGAy5Yf&_nc_oc=Adl-XrBimFOYC2Z-dEYig6mgwADsXwYL2lDV0_RRyilAupa6tc7x3ZpJ8srAOPEZwok&_nc_zt=23&_nc_ht=scontent.ftpe7-4.fna&_nc_gid=sgtB-SD8zu_jmOdBRNJG3w&oh=00_AfvTCJP6N6Yu3yawFgRX-HDK9l47KLkgp9kYHQgiob5DQQ&oe=6989062F",
+            7: "https://scontent.ftpe7-4.fna.fbcdn.net/v/t39.30808-6/505493465_10009415832474727_7816058211966207215_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=a5f93a&_nc_ohc=OQhkLgg4mSkQ7kNvwGAy5Yf&_nc_oc=Adl-XrBimFOYC2Z-dEYig6mgwADsXwYL2lDV0_RRyilAupa6tc7x3ZpJ8srAOPEZwok&_nc_zt=23&_nc_ht=scontent.ftpe7-4.fna&_nc_gid=sgtB-SD8zu_jmOdBRNJG3w&oh=00_AfvTCJP6N6Yu3yawFgRX-HDK9l47KLkgp9kYHQgiob5DQQ&oe=6989062F",
+            8: "https://scontent.ftpe7-4.fna.fbcdn.net/v/t39.30808-6/505493465_10009415832474727_7816058211966207215_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=a5f93a&_nc_ohc=OQhkLgg4mSkQ7kNvwGAy5Yf&_nc_oc=Adl-XrBimFOYC2Z-dEYig6mgwADsXwYL2lDV0_RRyilAupa6tc7x3ZpJ8srAOPEZwok&_nc_zt=23&_nc_ht=scontent.ftpe7-4.fna&_nc_gid=sgtB-SD8zu_jmOdBRNJG3w&oh=00_AfvTCJP6N6Yu3yawFgRX-HDK9l47KLkgp9kYHQgiob5DQQ&oe=6989062F",
+            9: "https://scontent.ftpe7-4.fna.fbcdn.net/v/t39.30808-6/505493465_10009415832474727_7816058211966207215_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=a5f93a&_nc_ohc=OQhkLgg4mSkQ7kNvwGAy5Yf&_nc_oc=Adl-XrBimFOYC2Z-dEYig6mgwADsXwYL2lDV0_RRyilAupa6tc7x3ZpJ8srAOPEZwok&_nc_zt=23&_nc_ht=scontent.ftpe7-4.fna&_nc_gid=sgtB-SD8zu_jmOdBRNJG3w&oh=00_AfvTCJP6N6Yu3yawFgRX-HDK9l47KLkgp9kYHQgiob5DQQ&oe=6989062F",
+            10: "https://scontent.ftpe7-4.fna.fbcdn.net/v/t39.30808-6/505493465_10009415832474727_7816058211966207215_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=a5f93a&_nc_ohc=OQhkLgg4mSkQ7kNvwGAy5Yf&_nc_oc=Adl-XrBimFOYC2Z-dEYig6mgwADsXwYL2lDV0_RRyilAupa6tc7x3ZpJ8srAOPEZwok&_nc_zt=23&_nc_ht=scontent.ftpe7-4.fna&_nc_gid=sgtB-SD8zu_jmOdBRNJG3w&oh=00_AfvTCJP6N6Yu3yawFgRX-HDK9l47KLkgp9kYHQgiob5DQQ&oe=6989062F",
+            default: "https://scontent.ftpe7-3.fna.fbcdn.net/v/t39.30808-6/306126031_482628520536469_5214095698248764192_n.png?_nc_cat=103&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=I3uRo5W7SVcQ7kNvwEROqOh&_nc_oc=AdmxxTQGG-DoUtfUqZqZUcFi_RcL3WQ4RPjAeTkQPhzW549avzE8mVhu9pfelh3tQaE&_nc_zt=23&_nc_ht=scontent.ftpe7-3.fna&_nc_gid=_oEjcviavCDshiIwrBZetg&oh=00_Afs27wldzXemaZFmAAb67WokenJYtdATaBLFOLwcURdVtw&oe=6988DB50"
+        };
+
+        function resolveImageUrl(url) {
+            if (!url) return IMAGE_ASSETS.default;
+            if (url.includes('drive.google.com')) {
+                const idMatch = url.match(/\/d\/(.+?)(\/|$)/) || url.match(/id=(.+?)(\&|$)/);
+                if (idMatch && idMatch[1]) {
+                    return `https://drive.google.com/thumbnail?id=${idMatch[1]}&sz=w1920`;
+                }
+            }
+            return url;
+        }
+
+
+        const GEAR_LIST = [
+            { 
+                name: "廣播級 4K 攝影機", 
+                enName: "Broadcast Camcorder", 
+                desc: "鎮台之寶。高畫質、大感光元件，大型轉播與棚內錄影的主力設備。", 
+                category: "CAMERA",
+                imgUrl: "https://drive.google.com/file/d/1YUVFXPAfCAm0V4aLkI2aBcxWr2B3PrTh/view?usp=sharing" 
+            },
+            { 
+                name: "專業手持攝影機", 
+                enName: "Professional Handheld", 
+                desc: "機動性與專業功能兼具。適合外景採訪、活動紀錄的單兵作戰利器。", 
+                category: "CAMERA",
+                imgUrl: "https://drive.google.com/file/d/1GgCFHM45m5ni529448PbirhY--W54BvD/view?usp=sharing" 
+            },
+            { 
+                name: "掌上型便攜攝影機", 
+                enName: "Compact Palm Camcorder", 
+                desc: "輕巧靈活 (Handycam)。適合長跟拍、Vlog 視角或作為特殊機位使用。", 
+                category: "CAMERA",
+                imgUrl: "https://drive.google.com/file/d/1W6Sj7H3ch7xg9MEd1unr5FeFqoBKzuwg/view?usp=drive_link" 
+            },
+
+            { 
+                name: "專業打光燈組", 
+                enName: "Lighting Kit", 
+                desc: "包含多種光源和補光板，無論棚內或外景都能營造專業質感。", 
+                category: "LIGHT",
+                imgUrl: "https://drive.google.com/file/d/1er-w-4o3WO-XyV1H_d8PVVlIfNftNmxo/view?usp=drive_link" 
+            },
+
+        ];
+
+        const generationsData = [
+            {
+                id: 16,
+                year: "2025-2026",
+                leader: "台長：林承叡\n副台長：許雅茜",
+                timeline: [
+                    { date: "2025/08/27", title: "新生營導播", type: "MISSION" },
+                    { date: "2025/09/06", title: "社團長研習營影片", type: "MISSION" },
+                    { date: "2025/09/09", title: "期初社大", type: "EVENT" },
+                    { date: "2025/10/03", title: "劍道社宣傳影片拍攝", type: "MISSION" },
+                    { date: "2025/11/08", title: "運動一瞬間6.0 金獎", type: "AWARD", url: "https://www.ssu.org.tw/News/Detail/248b87b4-445c-4319-a472-52614c0ec6a5" },
+                    { date: "2025/11/22", title: "TEDxNCU 年度大會轉播", type: "MISSION" },
+                    { date: "2025/11/24", title: "鋼琴社琴友獨鐘錄影", type: "MISSION" },
+                    { date: "2025/11/25", title: "綠色行動，循環永續影片拍攝", type: "MISSION" },
+                    { date: "2025/12/03", title: "綠色行動，循環永續影片 第一名", type: "AWARD" },
+                    { date: "2025/12/11", title: "台灣混凝土學會年會拍照", type: "MISSION" },
+                    { date: "2025/12/12", title: "期末社大", type: "EVENT", url: "https://drive.google.com/file/d/1tRvS-G_Eztp3wvbAQzzRwSd02TqzUet7/view?usp=drive_link"  },
+                    { date: "2026/03/14", title: "第五屆潛力種子盃影片", type: "MISSION" }
+                ],
+                classes: [
+                    { date: "09/18", title: "基礎設備操作", lecturer: "林承叡", photoUrl: "https://www.instagram.com/p/DObQf4-AUuN/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" },
+                    { date: "09/23", title: "捲線教學", lecturer: "游景雯" },
+                    { date: "10/01", title: "直播教學", lecturer: "林承叡" },
+                    { date: "10/08", title: "攝影基礎快速入門", lecturer: "林建宏老師", photoUrl: "https://www.facebook.com/share/p/1Bzw3ABVS4/" },
+                    { date: "10/15", title: "構圖與光影", lecturer: "林建宏老師", photoUrl: "https://www.facebook.com/share/p/1AZRUhhkVY/" },
+                    { date: "11/03", title: "活動花絮實戰", lecturer: "林建宏老師", photoUrl: "https://www.facebook.com/share/p/16yQxtNNuZ/" },
+                    { date: "11/12", title: "動態拍攝技巧", lecturer: "林建宏老師", photoUrl: "https://www.facebook.com/share/p/1C5Aoh5qby/" },
+                    { date: "11/19", title: "訪談與人像", lecturer: "林建宏老師", photoUrl: "https://www.facebook.com/share/p/184wpVoeAa/" },
+                    { date: "11/26", title: "後製與作品呈現", lecturer: "林建宏老師", photoUrl: "https://www.facebook.com/share/p/1DYvFwaBuw/" },
+                    { date: "12/03", title: "剪輯、導播機教學", lecturer: "林承叡" }
+                ],
+                works: [
+                    { title: "「小題，才能大作」 (劍道社宣傳影片)", youtubeId: "YfgWGjOh6y4" },
+                    {title:" ",imageUrl:"https://www.ssu.org.tw/Uploads/NewsCover/EFA73803-67E6-4DA2-8E70-69B6C211E195.jpg"},
+                    { title: "得獎照", imageUrl: "https://drive.google.com/file/d/1yWNxzXlkUNtpNkKpiQVjsYE_pD8-JKCs/view?usp=sharing" },
+                    { title: "2025社團博覽會預告片", youtubeId: "OgkhfOyr7p0" },
+                    { title: "TEDxNCU 年度大會轉播", youtubeId: "L4oLzrjBhEg",customThumb:"https://drive.google.com/file/d/1Vd8nFOx5TYxXrcyqQv0-JZRvqBi0kYCa/view?usp=drive_link" }
+                ],
+                allMembers: ["林承叡", "許雅茜", "游景雯", "陳沅和", "陳湘雯", "周志奇", "李宥寬", "黃翊茹", "李昕叡", "簡嘉鎂", "林彥伶", "游斯婷", "馮笠珊"]
+            },
+            {
+                id: 15,
+                year: "2024-2025",
+                leader: "台長：李宥寬\n副台長：黃翊茹\n公關兼財務：陳沅和",
+                timeline: [
+                    { date: "2024/09/23", title: "期初社大", type: "EVENT" },
+                    { date: "2024/11/11", title: "中大性別小彩坊投影", type: "MISSION" },
+                    { date: "2024/11/21", title: "運動會諮商中心揭幕儀式", type: "MISSION" },
+                    { date: "2025/01/09", title: "期末 Pizza 聚會", type: "EVENT" },
+                    { date: "2025/03/12", title: "期初聚餐", type: "EVENT" },
+                    { date: "2025/03/15", title: "第四屆潛力種子盃影片", type: "MISSION", url: "https://youtu.be/IeELA5kE5YM?si=mKKXzAyYdT4Uf1HG" },
+                    { date: "2025/05/06", title: "校長座談會直播", type: "MISSION" },
+                    { date: "2025/05/24", title: "畢業典禮直播", type: "MISSION" },
+                    { date: "2025/06", title: "諮商中心影片", type: "MISSION" },
+                    { date: "2025/06/16", title: "期末聚會", type: "EVENT"},
+                    { date: "2025/08/27", title: "新生營導播", type: "MISSION" }
+                ],
+                classes: [],
+                works: [
+                    { title: "113學年度校長座談會", youtubeId: "UXnfFroEd_A" },
+                    { title: "第四屆潛力種子盃個股研究競賽複賽花絮", youtubeId: "IeELA5kE5YM" },
+                    { title: "113學年度畢業典禮", youtubeId: "pJenC3kF5QA" }
+                ],
+                allMembers: ["李宥寬", "黃翊茹", "陳沅和", "陳湘雯", "周志奇", "魏仁祥", "徐詠蘋", "林承叡", "許雅茜", "王力玄", "游斯婷", "馮笠珊", "游景雯"]
+            },
+            {
+                id: 14,
+                year: "2023-2024",
+                leader: "台長：游景雯",
+                timeline: [
+                    { date: "2023/09/04~2023/09/06", title: "新生營", type: "MISSION" },
+                    { date: "2023/09/09", title: "社團博覽會", type: "EVENT" },
+                    { date: "2023/09/19", title: "期初社大", type: "EVENT" },
+                    { date: "2023/11/14", title: "熱舞大賽直播", type: "MISSION" },
+                    { date: "2023/12/20", title: "地科之夜", type: "MISSION" },
+                    { date: "2024/01/03", title: "英文系戲劇演出", type: "MISSION" },
+                    { date: "2024/02/24", title: "TEDxNCU 年會", type: "MISSION" },
+                    { date: "2024/03/16", title: "證券研究社比賽", type: "MISSION" },
+                    { date: "2024/04/29", title: "校長座談會直播場佈", type: "MISSION" },
+                    { date: "2024/04/30", title: "校長座談會直播", type: "MISSION" },
+                    { date: "2024/05/04", title: "英文戲劇公演", type: "MISSION" },
+                    { date: "2024/05/25", title: "畢業典禮", type: "MISSION" }
+                ],
+                classes: [
+                    { date: "2023/12/03", title: "想像未來的台灣媒體，媒體素養與資訊識讀",lecturer: "方君竹老師"},
+                    { date: "2024/02/23", title: "導播機、攝影機複習" },
+                    { date: "2024/02/27", title: "出隊分工討論" },
+                    { date: "2024/03/05", title: "OBS模擬直播" },
+                    { date: "2024/03/19", title: "Pr剪輯教學基礎操作" },
+                    { date: "2024/03/26", title: "Pr剪輯教學(TED示例)" },
+                    { date: "2024/04/23", title: "Pr剪輯教學(TED示例)" },
+                ],
+                works: [
+                    { title: "112學年度熱舞大賽", youtubeId: "PbQYFWykeHI" },
+                    { title: "112學年度畢業典禮", youtubeId: "s2cNplUErQ8" },
+                    { title: "112學年度校長座談會", youtubeId: "LztzI0a1LVk" }
+                ], allMembers: []
+            },
+            // { id: 13, year: "2022-2023", leader: "TBD", timeline: [], classes: [], works: [], allMembers: [] },
+            // { id: 12, year: "2021-2022", leader: "TBD", timeline: [], classes: [], works: [], allMembers: [] },
+            // { id: 10, year: "2019-2020", leader: "TBD", timeline: [], classes: [], works: [], allMembers: [] },
+            { id: 1, year: "2010-2011", leader: "創始屆", 
+            timeline: [
+                { date: "2010", title: "小中大電視台創立", type: "EVENT" }], 
+            classes: [], 
+            works: [
+                { title: "NCUTV 小中大新聞-人車爭道 百花川爭霸",imageUrl: "https://i.ytimg.com/vi/DKjWqYjunwU/hqdefault.jpg?sqp=-oaymwFBCNACELwBSFryq4qpAzMIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB8AEB-AHUBoAC4AOKAgwIABABGFUgZShUMA8=&rs=AOn4CLB0idwamUZcR_a8jRpalMjcivSjgA" },
+                { title: "NCUTV 小中大新聞-綠色腳踏車 環保新能量", imageUrl: "https://i.ytimg.com/vi/Lda3n_KJlz0/hqdefault.jpg?sqp=-oaymwEnCNACELwBSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLBCYdUCY1QSPSlzXXZ7wHutn_HTdQ" },
+                { title: "NCUTV 小中大新聞-中大風很大", imageUrl: "https://i.ytimg.com/vi/XI4LhuMVoQk/hqdefault.jpg?sqp=-oaymwFBCNACELwBSFryq4qpAzMIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB8AEB-AHUBoAC4AOKAgwIABABGEkgXChlMA8=&rs=AOn4CLDqSLBdeo0HmTZBQp7yYu4RNwHKLQ" }],    
+            allMembers: [] },
+        ];
+
+        const viewGallery = document.getElementById('view-gallery');
+        const viewDetail = document.getElementById('view-detail');
+        const galleryGrid = document.getElementById('gallery-grid');
+
+        // 設定首頁 Banner
+        document.getElementById('home-banner-img').src = SITE_CONFIG.bannerUrl;
+
+        document.addEventListener('contextmenu', e => e.preventDefault());
+
+        document.onkeydown = function(e) {
+            if (
+                e.keyCode === 123 || // F12
+                (e.ctrlKey && e.shiftKey && e.keyCode === 73) || // Ctrl+Shift+I
+                (e.ctrlKey && e.shiftKey && e.keyCode === 67) || // Ctrl+Shift+C
+                (e.ctrlKey && e.keyCode === 85)
+            ) {
+                return false;
+            }
+        };
+
+        window.onpopstate = function(event) {
+            if (!document.getElementById('modal-about').classList.contains('hidden')) {
+                closeModal('modal-about', true);
+                return;
+            }
+            if (!document.getElementById('modal-gear').classList.contains('hidden')) {
+                closeModal('modal-gear', true);
+                return;
+            }
+            if (!document.getElementById('view-detail').classList.contains('hidden')) {
+                closeDetail(true);
+                return;
+            }
+        };
+
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.remove('hidden');
+            if(modalId === 'modal-gear') renderGear();
+            
+            history.pushState({modal: modalId}, null, '');
+        }
+
+        function closeModal(modalId, isBackNav = false) {
+            document.getElementById(modalId).classList.add('hidden');
+            
+            if (!isBackNav) {
+                history.back();
+            }
+        }
+
+        function renderGear() {
+            const container = document.getElementById('gear-grid');
+            if(container.children.length > 0) return;
+            
+            GEAR_LIST.forEach(item => {
+                const img = resolveImageUrl(item.imgUrl);
+                const div = document.createElement('div');
+                div.className = "gear-card rounded-lg";
+                div.innerHTML = `
+                    <div class="gear-img-container">
+                        <img src="${img}" alt="${item.name}" class="gear-img">
+                    </div>
+                    <div class="p-6">
+                        <div class="text-xs font-bold text-ncu-accent tracking-widest mb-2">${item.category}</div>
+                        <h3 class="text-2xl font-bold text-white mb-1">${item.name}</h3>
+                        <span class="text-sm text-gray-500 block font-normal mb-3 font-mono">${item.enName}</span>
+                        <p class="text-gray-400 text-sm">${item.desc}</p>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function initGallery() {
+            galleryGrid.innerHTML = '';
+            const sorted = generationsData.sort((a, b) => b.id - a.id);
+
+            sorted.forEach((gen, index) => {
+                const delay = index * 0.1;
+                const rawUrl = IMAGE_ASSETS[gen.id] || IMAGE_ASSETS.default;
+                const coverImg = resolveImageUrl(rawUrl);
+
+                const card = document.createElement('div');
+                card.className = `vol-card relative bg-[#111] border border-white/10 rounded-2xl overflow-hidden cursor-pointer animate-slide-up group`;
+                card.style.animationDelay = `${delay}s`;
+                card.onclick = () => openGeneration(gen.id);
+
+                card.innerHTML = `
+                    <div class="aspect-[4/3] relative overflow-hidden bg-black">
+                        <img src="${coverImg}" 
+                             class="vol-img absolute inset-0 w-full h-full object-cover transition-all duration-700 grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100"
+                             onerror="this.style.display='none'; this.parentElement.style.backgroundColor='#1a1a1a'">
+                        
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-90"></div>
+                        <div class="absolute bottom-10 left-10 z-10">
+                            <h2 class="text-6xl font-black text-white tracking-tighter leading-none group-hover:text-ncu-accent transition-colors">第 ${gen.id} 屆</h2>
+                            <p class="text-ncu-sub font-mono text-lg mt-4 tracking-widest uppercase">${gen.year}</p>
+                        </div>
+                        <div class="absolute top-6 right-6 px-5 py-2 bg-black/50 backdrop-blur rounded-full text-sm text-white/70 font-mono border border-white/10">VOL.0${gen.id}</div>
+                    </div>
+                `;
+                galleryGrid.appendChild(card);
+            });
+        }
+
+        function openGeneration(id) {
+            const gen = generationsData.find(g => g.id === id);
+            if (!gen) return;
+
+            history.pushState({view: 'detail', id: id}, null, '');
+
+            document.getElementById('detail-vol').textContent = `第 ${gen.id} 屆`;
+            document.getElementById('detail-year').textContent = gen.year;
+            document.getElementById('detail-leader').textContent = gen.leader || "Data to be updated";
+
+            const rawUrl = IMAGE_ASSETS[gen.id] || IMAGE_ASSETS.default;
+            document.getElementById('detail-bg').style.backgroundImage = `url('${resolveImageUrl(rawUrl)}')`;
+
+            renderVerticalTimeline(gen.timeline);
+            renderSidebar(gen);
+
+            viewGallery.style.opacity = '0';
+            setTimeout(() => {
+                viewGallery.classList.add('hidden');
+                viewDetail.classList.remove('hidden');
+                void viewDetail.offsetWidth;
+                viewDetail.classList.remove('opacity-0');
+
+                const items = document.querySelectorAll('.timeline-item');
+                items.forEach((item, idx) => {
+                    item.style.animation = `slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards ${idx * 0.05}s`;
+                });
+            }, 500);
+        }
+
+        function closeDetail(isBackNav = false) {
+            viewDetail.classList.add('opacity-0');
+            setTimeout(() => {
+                viewDetail.classList.add('hidden');
+                viewGallery.classList.remove('hidden');
+                void viewGallery.offsetWidth;
+                viewGallery.style.opacity = '1';
+            }, 500);
+
+            if (!isBackNav) {
+                history.back();
+            }
+        }
+
+        function renderVerticalTimeline(timelineData) {
+            const container = document.getElementById('timeline-list');
+            container.innerHTML = '';
+
+            if (!timelineData || timelineData.length === 0) {
+                container.innerHTML = '<div class="pl-2 text-gray-500 font-mono text-lg italic">No events recorded.</div>';
+                return;
+            }
+
+            const sortedTimeline = timelineData.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+            sortedTimeline.forEach((item) => {
+                let badgeClass = "bg-gray-800 text-gray-400 border-gray-700";
+                if (item.type === 'MISSION') badgeClass = "bg-blue-900/20 text-blue-300 border-blue-800/40";
+                if (item.type === 'EVENT') badgeClass = "bg-purple-900/20 text-purple-300 border-purple-800/40";
+                if (item.type === 'AWARD') badgeClass = "bg-ncu-accent/20 text-ncu-accent border-ncu-accent/40";
+
+                const node = document.createElement('div');
+                node.className = "timeline-item group";
+                node.innerHTML = `
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="flex flex-wrap items-center gap-5 mb-4">
+                            <div class="font-mono text-ncu-accent text-lg tracking-wider font-bold">${item.date}</div>
+                            <span class="text-sm font-bold px-3 py-1 rounded border ${badgeClass} tracking-wider">${item.type}</span>
+                        </div>
+                        <h4 class="text-white text-3xl font-bold leading-tight group-hover:text-ncu-accent transition-colors">
+                            ${item.url ? `<a href="${item.url}" target="_blank" class="hover:underline underline-offset-8 decoration-2">${item.title} ↗</a>` : item.title}
+                        </h4>
+                    </div>
+                `;
+                container.appendChild(node);
+            });
+        }
+
+        function renderSidebar(gen) {
+            const worksContainer = document.getElementById('works-grid');
+            const worksSection = document.getElementById('section-works');
+            worksContainer.innerHTML = '';
+
+            if (gen.works && gen.works.length > 0) {
+                worksSection.classList.remove('hidden');
+                gen.works.forEach(work => {
+                    const div = document.createElement('div');
+
+                    if (work.youtubeId) {
+                        const thumbUrl = `https://img.youtube.com/vi/${work.youtubeId}/maxresdefault.jpg`;
+                        div.innerHTML = `
+                            <a href="https://www.youtube.com/watch?v=${work.youtubeId}" target="_blank" class="group block">
+                                <div class="relative aspect-video bg-black rounded-xl overflow-hidden border border-white/10 group-hover:border-ncu-accent transition-colors shadow-2xl">
+                                    <img src="${thumbUrl}" alt="${work.title}" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                                    <div class="absolute inset-0 flex items-center justify-center">
+                                        <div class="w-16 h-16 bg-ncu-red/90 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity transform scale-50 group-hover:scale-100 duration-300 shadow-xl">
+                                            <svg class="w-8 h-8 text-white ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                        </div>
+                                    </div>
+                                    <div class="absolute top-3 right-3 bg-black/60 backdrop-blur px-2 py-1 rounded text-[12px] text-white font-mono border border-white/10">VIDEO</div>
+                                </div>
+                                <div class="mt-5 text-xl font-bold text-white truncate group-hover:text-ncu-accent transition-colors">${work.title}</div>
+                            </a>
+                        `;
+                    } 
+                    else if (work.playlistId) {
+                        const embedUrl = `https://www.youtube.com/embed/videoseries?list=${work.playlistId}`;
+                        div.innerHTML = `
+                            <div class="group block">
+                                <div class="relative aspect-video bg-black rounded-xl overflow-hidden border border-white/10 group-hover:border-ncu-accent transition-colors shadow-2xl">
+                                    <iframe src="${embedUrl}" title="${work.title}" class="w-full h-full" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                    <div class="absolute top-3 right-3 bg-red-600/80 backdrop-blur px-2 py-1 rounded text-[12px] text-white font-mono border border-white/10">PLAYLIST</div>
+                                </div>
+                                <div class="mt-5 text-xl font-bold text-white truncate group-hover:text-ncu-accent transition-colors">${work.title}</div>
+                            </div>
+                        `;
+                    }
+                    else if (work.imageUrl) {
+                        const finalImgUrl = resolveImageUrl(work.imageUrl);
+                        div.innerHTML = `
+                            <div class="group block cursor-pointer" onclick="window.open('${finalImgUrl}', '_blank')">
+                                <div class="relative aspect-video bg-black rounded-xl overflow-hidden border border-white/10 group-hover:border-ncu-accent transition-colors shadow-2xl">
+                                    <img src="${finalImgUrl}" alt="${work.title}" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-transform duration-700 group-hover:scale-105">
+                                    <div class="absolute top-3 right-3 bg-ncu-accent/90 backdrop-blur px-2 py-1 rounded text-[12px] text-black font-bold font-mono shadow-lg">IMG</div>
+                                </div>
+                                <div class="mt-5 text-xl font-bold text-white truncate group-hover:text-ncu-accent transition-colors flex items-center gap-2">
+                                    ${work.title}
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    worksContainer.appendChild(div);
+                });
+            } else {
+                worksSection.classList.add('hidden');
+            }
+
+            const classesContainer = document.getElementById('classes-list');
+            const classesSection = document.getElementById('section-classes');
+            classesContainer.innerHTML = '';
+
+            if (gen.classes && gen.classes.length > 0) {
+                classesSection.classList.remove('hidden');
+                gen.classes.forEach(c => {
+                    const div = document.createElement('div');
+                    div.className = "class-card flex flex-col gap-2 group cursor-default relative";
+                    div.innerHTML = `
+                        <div class="flex justify-between items-start z-10">
+                            <div class="flex items-center gap-4">
+                                <span class="text-ncu-sub font-mono text-base bg-white/10 px-3 py-1 rounded min-w-[70px] text-center">${c.date}</span>
+                                <h4 class="text-2xl font-bold text-gray-200 group-hover:text-white transition-colors">${c.title}</h4>
+                            </div>
+                            
+                            ${c.photoUrl ? `
+                                <a href="${c.photoUrl}" target="_blank" 
+                                   class="flex items-center gap-2 border border-ncu-accent/50 text-ncu-accent px-3 py-1 rounded-full hover:bg-ncu-accent hover:text-black transition-all text-sm font-bold ml-4 whitespace-nowrap">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z" />
+                                    </svg>
+                                    花絮
+                                </a>
+                            ` : ''}
+                        </div>
+                        ${c.lecturer ? `
+                            <div class="flex items-center gap-2 mt-2 ml-[86px]">
+                                <span class="text-sm text-ncu-sub">Lecturer:</span>
+                                <span class="text-base font-bold text-ncu-black bg-ncu-accent px-3 py-0.5 rounded-full shadow-lg shadow-ncu-accent/20 hover:scale-105 transition-transform cursor-default">${c.lecturer}</span>
+                            </div>
+                        ` : ''}
+                    `;
+                    classesContainer.appendChild(div);
+                });
+            } else {
+                classesSection.classList.add('hidden');
+            }
+
+            const membersContainer = document.getElementById('members-list');
+            membersContainer.innerHTML = '';
+            if (gen.allMembers) {
+                gen.allMembers.forEach(m => {
+                    const span = document.createElement('span');
+                    span.className = "text-xl text-gray-400 border border-white/10 px-6 py-3 rounded-xl hover:text-white hover:border-ncu-accent/50 hover:bg-ncu-accent/10 transition-colors cursor-default";
+                    span.textContent = m;
+                    membersContainer.appendChild(span);
+                });
+            }
+        }
+
+        initGallery();
+
+    </script>
+</body>
+
+</html>
