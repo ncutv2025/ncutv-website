@@ -72,51 +72,121 @@
         }
 
         .bg-noise {
-            position: fixed; top: -50%; left: -50%; width: 200%; height: 200%;
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
             animation: grain 8s steps(10) infinite;
             pointer-events: none;
             z-index: 50;
         }
 
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
 
-        .vol-card { transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); }
-        .vol-card:hover { transform: translateY(-15px); box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.9); border-color: #C0A062; }
-        .vol-card:hover .vol-img { transform: scale(1.1); filter: grayscale(0%); }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .vol-card {
+            transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .vol-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.9);
+            border-color: #C0A062;
+        }
+
+        .vol-card:hover .vol-img {
+            transform: scale(1.1);
+            filter: grayscale(0%);
+        }
 
         .timeline-line {
-            position: absolute; left: 23px; top: 15px; bottom: 0; width: 4px;
+            position: absolute;
+            left: 23px;
+            top: 15px;
+            bottom: 0;
+            width: 4px;
             background: linear-gradient(to bottom, #333 0%, #333 90%, transparent 100%);
         }
-        .timeline-item { position: relative; padding-left: 80px; padding-bottom: 60px; opacity: 0; }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 80px;
+            padding-bottom: 60px;
+            opacity: 0;
+        }
+
         .timeline-dot {
-            position: absolute; left: 15px; top: 10px; width: 20px; height: 20px;
-            background: #050505; border: 4px solid #666; border-radius: 50%; z-index: 10;
+            position: absolute;
+            left: 15px;
+            top: 10px;
+            width: 20px;
+            height: 20px;
+            background: #050505;
+            border: 4px solid #666;
+            border-radius: 50%;
+            z-index: 10;
             transition: all 0.3s;
         }
-        .timeline-item:hover .timeline-dot { background: #C0A062; border-color: #C0A062; box-shadow: 0 0 25px rgba(192, 160, 98, 0.7); }
-        
+
+        .timeline-item:hover .timeline-dot {
+            background: #C0A062;
+            border-color: #C0A062;
+            box-shadow: 0 0 25px rgba(192, 160, 98, 0.7);
+        }
+
         .timeline-content {
-            background: #111; border: 1px solid #222; padding: 2rem; border-radius: 1rem;
+            background: #111;
+            border: 1px solid #222;
+            padding: 2rem;
+            border-radius: 1rem;
             transition: all 0.3s;
         }
-        .timeline-item:hover .timeline-content { border-color: #666; background: #1a1a1a; transform: translateX(10px); }
+
+        .timeline-item:hover .timeline-content {
+            border-color: #666;
+            background: #1a1a1a;
+            transform: translateX(10px);
+        }
 
         .class-card {
-            background: #111; border: 1px solid #222; padding: 1.5rem; border-radius: 0.75rem;
+            background: #111;
+            border: 1px solid #222;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
             transition: all 0.3s;
         }
-        .class-card:hover { border-color: #C0A062; background: #161616; transform: translateY(-5px); }
+
+        .class-card:hover {
+            border-color: #C0A062;
+            background: #161616;
+            transform: translateY(-5px);
+        }
 
         .hero-banner {
-            position: relative; width: 100%; height: 350px; overflow: hidden;
-            border-radius: 1rem; margin-bottom: 2rem; border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            width: 100%;
+            height: 350px;
+            overflow: hidden;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
+
         .hero-img {
-            width: 100%; height: 100%; object-fit: cover; transition: transform 10s ease;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 10s ease;
         }
+
         /* .hero-banner:hover .hero-img { transform: scale(1.05); }動畫 */
 
         .modal-overlay {
@@ -124,17 +194,23 @@
             backdrop-filter: blur(10px);
             cursor: pointer;
         }
+
         .modal-content {
-            cursor: default; 
+            cursor: default;
         }
-        
+
         .gear-card {
             background: linear-gradient(145deg, #111, #0a0a0a);
             border: 1px solid #222;
             transition: all 0.3s ease;
             overflow: hidden;
         }
-        .gear-card:hover { border-color: #C0A062; transform: translateY(-5px); }
+
+        .gear-card:hover {
+            border-color: #C0A062;
+            transform: translateY(-5px);
+        }
+
         .gear-img-container {
             width: 100%;
             height: 200px;
@@ -142,6 +218,7 @@
             border-bottom: 1px solid #222;
             overflow: hidden;
         }
+
         .gear-img {
             width: 100%;
             height: 100%;
@@ -149,8 +226,11 @@
             opacity: 0.8;
             transition: all 0.5s ease;
         }
-        .gear-card:hover .gear-img { opacity: 1; transform: scale(1.05); }
 
+        .gear-card:hover .gear-img {
+            opacity: 1;
+            transform: scale(1.05);
+        }
     </style>
 </head>
 
@@ -165,56 +245,87 @@
                 <div class="flex items-center gap-6">
                     <div class="relative w-4 h-4">
                         <div class="absolute inset-0 bg-ncu-red rounded-full animate-ping opacity-75"></div>
-                        <div class="relative w-4 h-4 bg-ncu-red rounded-full shadow-[0_0_15px_rgba(225,29,72,0.8)]"></div>
+                        <div class="relative w-4 h-4 bg-ncu-red rounded-full shadow-[0_0_15px_rgba(225,29,72,0.8)]">
+                        </div>
                     </div>
-                    <span class="text-ncu-accent font-mono text-base tracking-[0.4em] uppercase font-bold animate-pulse-slow">ON AIR</span>
+                    <span
+                        class="text-ncu-accent font-mono text-base tracking-[0.4em] uppercase font-bold animate-pulse-slow">ON
+                        AIR</span>
                 </div>
-                <div class="text-ncu-accent font-mono text-sm tracking-widest border border-ncu-accent px-3 py-1 rounded animate-pulse">熱烈招募中</div>
+                <div
+                    class="text-ncu-accent font-mono text-sm tracking-widest border border-ncu-accent px-3 py-1 rounded animate-pulse">
+                    熱烈招募中</div>
             </div>
 
             <div class="hero-banner group">
-                <img id="home-banner-img" src="" alt="Banner" class="hero-img opacity-60 group-hover:opacity-80 transition-opacity duration-700">
-                
-                <div class="absolute inset-0 bg-gradient-to-r from-black via-black/50 to-transparent flex flex-col justify-center px-6 md:px-20">
-                    <h1 class="text-2xl md:text-9xl font-black text-white tracking-tighter leading-none mb-1 drop-shadow-2xl">
+                <img id="home-banner-img" src="" alt="Banner"
+                    class="hero-img opacity-60 group-hover:opacity-80 transition-opacity duration-700">
+
+                <div
+                    class="absolute inset-0 bg-gradient-to-r from-black via-black/50 to-transparent flex flex-col justify-center px-6 md:px-20">
+                    <h1
+                        class="text-4xl md:text-9xl font-black text-white tracking-tighter leading-none mb-4 drop-shadow-2xl">
                         小中大電視台
                     </h1>
-                    <p class="text-ncu-sub text-lg md:text-2xl tracking-wide font-light border-l-4 border-ncu-accent pl-6">
+                    <p
+                        class="text-ncu-sub text-lg md:text-2xl tracking-wide font-light border-l-4 border-ncu-accent pl-6">
                         一幀一畫，小中見大。
                     </p>
                 </div>
 
-                <div class="absolute bottom-6 left-6 right-6 md:left-auto md:bottom-12 md:right-12 z-20 flex flex-col md:flex-row gap-3 md:gap-4 items-stretch md:items-center">
-                    <a href="https://www.surveycake.com/s/78noe" target="_blank" class="px-4 py-2 md:px-8 md:py-4 bg-white text-black font-bold tracking-[0.1em] rounded-full hover:bg-gray-200 hover:scale-105 transition-all shadow-[0_0_20px_rgba(255,255,255,0.4)] flex items-center justify-center gap-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                <div
+                    class="absolute bottom-6 left-6 right-6 md:left-auto md:bottom-12 md:right-12 z-20 flex flex-col md:flex-row gap-3 md:gap-4 items-stretch md:items-center">
+                    <a href="https://www.surveycake.com/s/78noe" target="_blank"
+                        class="px-6 py-3 md:px-8 md:py-4 bg-white text-black font-bold tracking-[0.1em] rounded-full hover:bg-gray-200 hover:scale-105 transition-all shadow-[0_0_20px_rgba(255,255,255,0.4)] flex items-center justify-center gap-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                            stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
                         </svg>
                         <span>出隊申請 (SERVICE)</span>
                     </a>
 
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfzCmAK9mto3YTna2X3imiQk5MGH3bAsGIXtL0ApUuh7DADhQ/viewform?usp=dialog" target="_blank" class="px-4 py-2 md:px-10 md:py-4 bg-ncu-accent text-black font-black tracking-[0.15em] rounded-full hover:bg-white hover:scale-105 transition-all shadow-[0_0_20px_rgba(192,160,98,0.6)] flex items-center justify-center gap-3">
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfzCmAK9mto3YTna2X3imiQk5MGH3bAsGIXtL0ApUuh7DADhQ/viewform?usp=dialog"
+                        target="_blank"
+                        class="px-8 py-3 md:px-10 md:py-4 bg-ncu-accent text-black font-black tracking-[0.15em] rounded-full hover:bg-white hover:scale-105 transition-all shadow-[0_0_20px_rgba(192,160,98,0.6)] flex items-center justify-center gap-3">
                         <span>加入我們 (JOIN US)</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-5 h-5">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5"
+                            stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                         </svg>
                     </a>
                 </div>
             </div>
 
             <div class="flex flex-wrap gap-4 animate-slide-up" style="animation-delay: 0.1s;">
-                <button onclick="openModal('modal-about')" class="px-8 py-3 bg-white/5 border border-white/20 hover:border-ncu-accent hover:text-ncu-accent hover:bg-white/10 rounded-full transition-all tracking-[0.2em] font-bold text-sm uppercase flex items-center gap-2 group shadow-[0_0_15px_rgba(192,160,98,0.3)]">
-                    <svg class="w-4 h-4 group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                <button onclick="openModal('modal-about')"
+                    class="px-8 py-3 bg-white/5 border border-white/20 hover:border-ncu-accent hover:text-ncu-accent hover:bg-white/10 rounded-full transition-all tracking-[0.2em] font-bold text-sm uppercase flex items-center gap-2 group shadow-[0_0_15px_rgba(192,160,98,0.3)]">
+                    <svg class="w-4 h-4 group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
                     關於我們
                 </button>
-                <button onclick="openModal('modal-gear')" class="px-8 py-3 bg-white/5 border border-white/20 hover:border-ncu-accent hover:text-ncu-accent hover:bg-white/10 rounded-full transition-all tracking-[0.2em] font-bold text-sm uppercase flex items-center gap-2 group">
-                    <svg class="w-4 h-4 group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                <button onclick="openModal('modal-gear')"
+                    class="px-8 py-3 bg-white/5 border border-white/20 hover:border-ncu-accent hover:text-ncu-accent hover:bg-white/10 rounded-full transition-all tracking-[0.2em] font-bold text-sm uppercase flex items-center gap-2 group">
+                    <svg class="w-4 h-4 group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
                     器材軍火庫
                 </button>
             </div>
         </header>
 
-        <h3 class="text-ncu-sub text-sm font-bold tracking-[0.2em] uppercase mb-6 pl-2 border-l-2 border-ncu-sub">歷屆傳承 (Legacy)</h3>
-        <div id="gallery-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12 w-full pb-20">
+        <h3 class="text-ncu-sub text-sm font-bold tracking-[0.2em] uppercase mb-6 pl-2 border-l-2 border-ncu-sub">歷屆傳承
+            (Legacy)</h3>
+        <div id="gallery-grid"
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12 w-full pb-20">
         </div>
 
         <footer class="mt-auto pt-20 border-t border-white/10 bg-[#0a0a0a]">
@@ -228,61 +339,101 @@
 
                     </p>
                     <div class="flex items-center gap-2 text-ncu-sub text-sm">
-                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
                         <span>桃園市中壢區中大路300號</span>
                     </div>
                 </div>
 
                 <div>
-                    <h4 class="text-white font-bold tracking-widest uppercase mb-6 border-b border-white/10 pb-2 inline-block">Explore</h4>
+                    <h4
+                        class="text-white font-bold tracking-widest uppercase mb-6 border-b border-white/10 pb-2 inline-block">
+                        Explore</h4>
                     <ul class="space-y-3 text-sm text-gray-400">
-                        <li><button onclick="openModal('modal-about')" class="hover:text-ncu-accent transition-colors">關於我們 (About)</button></li>
-                        <li><button onclick="openModal('modal-gear')" class="hover:text-ncu-accent transition-colors">器材清單 (Gear)</button></li>
+                        <li><button onclick="openModal('modal-about')"
+                                class="hover:text-ncu-accent transition-colors">關於我們 (About)</button></li>
+                        <li><button onclick="openModal('modal-gear')"
+                                class="hover:text-ncu-accent transition-colors">器材清單 (Gear)</button></li>
                         <li><a href="#" class="hover:text-ncu-accent transition-colors">歷屆作品 (Works)</a></li>
-                        <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSfzCmAK9mto3YTna2X3imiQk5MGH3bAsGIXtL0ApUuh7DADhQ/viewform?usp=dialog" class="hover:text-ncu-accent transition-colors">加入我們 (Join)</a></li>
+                        <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSfzCmAK9mto3YTna2X3imiQk5MGH3bAsGIXtL0ApUuh7DADhQ/viewform?usp=dialog"
+                                class="hover:text-ncu-accent transition-colors">加入我們 (Join)</a></li>
                     </ul>
                 </div>
 
                 <div>
-                    <h4 class="text-white font-bold tracking-widest uppercase mb-6 border-b border-white/10 pb-2 inline-block">Links</h4>
+                    <h4
+                        class="text-white font-bold tracking-widest uppercase mb-6 border-b border-white/10 pb-2 inline-block">
+                        Links</h4>
                     <ul class="space-y-3 text-sm text-gray-400">
-                        <li><a href="https://www.ncu.edu.tw/" target="_blank" class="hover:text-ncu-accent transition-colors">國立中央大學 (NCU)</a></li>
-                        <li><a href="https://club.adm.ncu.edu.tw/" target="_blank" class="hover:text-ncu-accent transition-colors">課外活動組</a></li>
-                        <li><a href="https://www.surveycake.com/s/78noe" target="_blank" class="hover:text-ncu-accent transition-colors">服務申請表單</a></li>
+                        <li><a href="https://www.ncu.edu.tw/" target="_blank"
+                                class="hover:text-ncu-accent transition-colors">國立中央大學 (NCU)</a></li>
+                        <li><a href="https://club.adm.ncu.edu.tw/" target="_blank"
+                                class="hover:text-ncu-accent transition-colors">課外活動組</a></li>
+                        <li><a href="https://www.surveycake.com/s/78noe" target="_blank"
+                                class="hover:text-ncu-accent transition-colors">服務申請表單</a></li>
                     </ul>
                 </div>
 
                 <div>
-                    <h4 class="text-white font-bold tracking-widest uppercase mb-6 border-b border-white/10 pb-2 inline-block">Follow Us</h4>
+                    <h4
+                        class="text-white font-bold tracking-widest uppercase mb-6 border-b border-white/10 pb-2 inline-block">
+                        Follow Us</h4>
                     <div class="flex gap-4">
-                        <a href="https://www.instagram.com/ncu_tv" target="_blank" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-ncu-accent hover:text-black transition-all">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                        <a href="https://www.instagram.com/ncu_tv" target="_blank"
+                            class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-ncu-accent hover:text-black transition-all">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                            </svg>
                         </a>
-                        <a href="https://www.facebook.com/NCUTVsince2010/" target="_blank" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-ncu-accent hover:text-black transition-all">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.962.925-1.962 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                        <a href="https://www.facebook.com/NCUTVsince2010/" target="_blank"
+                            class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-ncu-accent hover:text-black transition-all">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.962.925-1.962 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                            </svg>
                         </a>
-                        <a href="https://www.youtube.com/@NCUTV" target="_blank" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-ncu-accent hover:text-black transition-all">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                        <a href="https://www.youtube.com/@NCUTV" target="_blank"
+                            class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-ncu-accent hover:text-black transition-all">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                            </svg>
                         </a>
                     </div>
                 </div>
             </div>
 
-            <div class="border-t border-white/5 py-8 text-center text-ncu-sub text-sm tracking-widest uppercase bg-black">
+            <div
+                class="border-t border-white/5 py-8 text-center text-ncu-sub text-sm tracking-widest uppercase bg-black">
                 © 2010-2026 NCUTV. All Rights Reserved.
             </div>
         </footer>
     </main>
 
-    <div id="view-detail" class="fixed inset-0 bg-[#050505] z-50 overflow-y-auto hidden opacity-0 transition-opacity duration-500">
-        <div id="detail-bg" class="fixed top-0 left-0 w-full h-[60vh] bg-cover bg-center opacity-10 mask-image-gradient pointer-events-none" style="mask-image: linear-gradient(to bottom, black, transparent);"></div>
-        
-        <nav class="fixed top-0 left-0 w-full z-50 h-28 bg-[#050505]/80 backdrop-blur-md border-b border-white/5 flex items-center justify-between px-6 md:px-10">
-            <button onclick="closeDetail()" class="flex items-center gap-5 text-ncu-sub hover:text-white transition-colors group py-4">
-                <div class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center group-hover:border-white transition-colors bg-black/50">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" /></svg>
+    <div id="view-detail"
+        class="fixed inset-0 bg-[#050505] z-50 overflow-y-auto hidden opacity-0 transition-opacity duration-500">
+        <div id="detail-bg"
+            class="fixed top-0 left-0 w-full h-[60vh] bg-cover bg-center opacity-10 mask-image-gradient pointer-events-none"
+            style="mask-image: linear-gradient(to bottom, black, transparent);"></div>
+
+        <nav
+            class="fixed top-0 left-0 w-full z-50 h-28 bg-[#050505]/80 backdrop-blur-md border-b border-white/5 flex items-center justify-between px-6 md:px-10">
+            <button onclick="closeDetail()"
+                class="flex items-center gap-5 text-ncu-sub hover:text-white transition-colors group py-4">
+                <div
+                    class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center group-hover:border-white transition-colors bg-black/50">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                        stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+                    </svg>
                 </div>
-                <span class="text-lg font-mono tracking-widest uppercase group-hover:translate-x-1 transition-transform">Back</span>
+                <span
+                    class="text-lg font-mono tracking-widest uppercase group-hover:translate-x-1 transition-transform">Back</span>
             </button>
             <div class="text-ncu-accent font-bold tracking-widest text-xl">NCUTV</div>
         </nav>
@@ -291,21 +442,32 @@
             <header class="mb-40 grid grid-cols-1 lg:grid-cols-12 gap-20 items-end border-b border-white/10 pb-24">
                 <div class="lg:col-span-7">
                     <span class="text-ncu-red font-mono text-lg tracking-widest mb-8 flex items-center gap-4">
-                        <span class="w-4 h-4 bg-ncu-red rounded-full animate-pulse shadow-[0_0_20px_#e11d48]"></span> PROJECT FILE
+                        <span class="w-4 h-4 bg-ncu-red rounded-full animate-pulse shadow-[0_0_20px_#e11d48]"></span>
+                        PROJECT FILE
                     </span>
-                    <h2 id="detail-vol" class="text-5xl md:text-huge font-black text-white leading-none tracking-tighter -ml-2 mb-6 drop-shadow-2xl">VOL.16</h2>
-                    <h3 id="detail-year" class="text-3xl md:text-6xl text-ncu-sub font-mono font-light">2025-2026</h3>
+                    <h2 id="detail-vol"
+                        class="text-4xl md:text-huge font-black text-white leading-none tracking-tighter -ml-2 mb-6 drop-shadow-2xl">
+                        VOL.16</h2>
+                    <h3 id="detail-year" class="text-2xl md:text-6xl text-ncu-sub font-mono font-light">2025-2026</h3>
                 </div>
                 <div class="lg:col-span-5 lg:pl-12">
-                    <h4 class="text-ncu-accent text-lg font-bold tracking-[0.3em] uppercase mb-10 border-l-4 border-ncu-accent pl-6">製作團隊 (Crew)</h4>
-                    <p id="detail-leader" class="text-white text-3xl leading-relaxed whitespace-pre-line font-light"></p>
+                    <h4
+                        class="text-ncu-accent text-lg font-bold tracking-[0.3em] uppercase mb-10 border-l-4 border-ncu-accent pl-6">
+                        製作團隊 (Crew)</h4>
+                    <p id="detail-leader"
+                        class="text-white text-xl md:text-3xl leading-relaxed whitespace-pre-line font-light">
+                    </p>
                 </div>
             </header>
 
             <div class="grid grid-cols-1 xl:grid-cols-12 gap-24">
                 <div class="xl:col-span-7">
-                    <h3 class="text-3xl font-bold text-white tracking-widest uppercase mb-16 flex items-center gap-5">
-                        <svg class="w-8 h-8 text-ncu-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    <h3
+                        class="text-xl md:text-3xl font-bold text-white tracking-widest uppercase mb-16 flex items-center gap-5">
+                        <svg class="w-8 h-8 text-ncu-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
                         年度大事記 (Timeline)
                     </h3>
                     <div class="relative pl-4">
@@ -315,15 +477,21 @@
                 </div>
                 <div class="xl:col-span-5 space-y-32">
                     <div id="section-works" class="hidden">
-                        <h3 class="text-lg font-bold text-ncu-sub tracking-[0.3em] uppercase mb-10 border-b border-white/10 pb-4">精選作品 (Works)</h3>
+                        <h3
+                            class="text-lg font-bold text-ncu-sub tracking-[0.3em] uppercase mb-10 border-b border-white/10 pb-4">
+                            精選作品 (Works)</h3>
                         <div id="works-grid" class="grid gap-12"></div>
                     </div>
                     <div id="section-classes" class="hidden">
-                        <h3 class="text-lg font-bold text-ncu-sub tracking-[0.3em] uppercase mb-10 border-b border-white/10 pb-4">社課紀錄 (Classes)</h3>
+                        <h3
+                            class="text-lg font-bold text-ncu-sub tracking-[0.3em] uppercase mb-10 border-b border-white/10 pb-4">
+                            社課紀錄 (Classes)</h3>
                         <div id="classes-list" class="space-y-6"></div>
                     </div>
                     <div>
-                        <h3 class="text-lg font-bold text-ncu-sub tracking-[0.3em] uppercase mb-10 border-b border-white/10 pb-4">成員名單 (Crew List)</h3>
+                        <h3
+                            class="text-lg font-bold text-ncu-sub tracking-[0.3em] uppercase mb-10 border-b border-white/10 pb-4">
+                            成員名單 (Crew List)</h3>
                         <div id="members-list" class="flex flex-wrap gap-4"></div>
                     </div>
                 </div>
@@ -331,32 +499,45 @@
         </div>
     </div>
 
-    <div id="modal-about" class="fixed inset-0 modal-overlay z-[60] hidden flex items-center justify-center p-4" onclick="if(event.target === this) closeModal('modal-about')">
-        <div class="bg-[#111] border border-white/20 w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-xl relative animate-slide-up modal-content">
-            <button onclick="closeModal('modal-about')" class="absolute top-6 right-6 text-gray-500 hover:text-white p-2 hover:bg-white/10 rounded-full transition-colors"><svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg></button>
+    <div id="modal-about" class="fixed inset-0 modal-overlay z-[60] hidden flex items-center justify-center p-4"
+        onclick="if(event.target === this) closeModal('modal-about')">
+        <div
+            class="bg-[#111] border border-white/20 w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-xl relative animate-slide-up modal-content">
+            <button onclick="closeModal('modal-about')"
+                class="absolute top-6 right-6 text-gray-500 hover:text-white p-2 hover:bg-white/10 rounded-full transition-colors"><svg
+                    class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg></button>
             <div class="p-10 md:p-16">
                 <div class="text-center mb-16">
                     <h3 class="text-ncu-accent text-sm font-bold tracking-[0.4em] uppercase mb-6">Manifesto</h3>
-                    <h2 class="text-3xl md:text-5xl font-black text-white mb-6 leading-tight">實戰導向。<br>敘事與意象並重。<br>小題，才能大作。</h2>
+                    <h2 class="text-3xl md:text-5xl font-black text-white mb-6 leading-tight">
+                        實戰導向。<br>敘事與意象並重。<br>小題，才能大作。</h2>
                     <div class="w-24 h-1 bg-ncu-red mx-auto"></div>
                 </div>
 
                 <div class="mb-16">
-                    <h3 class="text-ncu-accent text-sm font-bold tracking-[0.2em] uppercase mb-6 border-l-4 border-ncu-accent pl-4">What We Do</h3>
+                    <h3
+                        class="text-ncu-accent text-sm font-bold tracking-[0.2em] uppercase mb-6 border-l-4 border-ncu-accent pl-4">
+                        What We Do</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="bg-white/5 p-6 rounded-lg border border-white/5 hover:border-ncu-accent/30 transition-colors">
+                        <div
+                            class="bg-white/5 p-6 rounded-lg border border-white/5 hover:border-ncu-accent/30 transition-colors">
                             <h4 class="text-white font-bold text-xl mb-2 flex items-center gap-2">🎬 企劃導演</h4>
                             <p class="text-ncu-sub text-sm">腳本發想、分鏡繪製、影片風格定調。</p>
                         </div>
-                        <div class="bg-white/5 p-6 rounded-lg border border-white/5 hover:border-ncu-accent/30 transition-colors">
+                        <div
+                            class="bg-white/5 p-6 rounded-lg border border-white/5 hover:border-ncu-accent/30 transition-colors">
                             <h4 class="text-white font-bold text-xl mb-2 flex items-center gap-2">🎥 攝影燈光</h4>
                             <p class="text-ncu-sub text-sm">專業攝影機操作、運鏡構圖、現場光影佈置。</p>
                         </div>
-                        <div class="bg-white/5 p-6 rounded-lg border border-white/5 hover:border-ncu-accent/30 transition-colors">
+                        <div
+                            class="bg-white/5 p-6 rounded-lg border border-white/5 hover:border-ncu-accent/30 transition-colors">
                             <h4 class="text-white font-bold text-xl mb-2 flex items-center gap-2">🖥️ 後製剪輯</h4>
                             <p class="text-ncu-sub text-sm">Davinci剪輯、調色與音效。</p>
                         </div>
-                        <div class="bg-white/5 p-6 rounded-lg border border-white/5 hover:border-ncu-accent/30 transition-colors">
+                        <div
+                            class="bg-white/5 p-6 rounded-lg border border-white/5 hover:border-ncu-accent/30 transition-colors">
                             <h4 class="text-white font-bold text-xl mb-2 flex items-center gap-2">📡 現場導播</h4>
                             <p class="text-ncu-sub text-sm">大型活動多機轉播、OBS 直播串流設定。</p>
                         </div>
@@ -383,10 +564,13 @@
                 </div>
 
                 <div class="flex flex-col md:flex-row gap-6 justify-center">
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfzCmAK9mto3YTna2X3imiQk5MGH3bAsGIXtL0ApUuh7DADhQ/viewform?usp=dialog" target="_blank" class="px-8 py-4 bg-ncu-accent text-black font-bold tracking-[0.2em] rounded hover:bg-white transition-colors text-center shadow-lg shadow-ncu-accent/20">
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfzCmAK9mto3YTna2X3imiQk5MGH3bAsGIXtL0ApUuh7DADhQ/viewform?usp=dialog"
+                        target="_blank"
+                        class="px-8 py-4 bg-ncu-accent text-black font-bold tracking-[0.2em] rounded hover:bg-white transition-colors text-center shadow-lg shadow-ncu-accent/20">
                         JOIN THE CREW (填寫表單)
                     </a>
-                    <a href="https://www.instagram.com/ncu_tv?igsh=MXB4ZWV5bnQzdHNzNQ==" target="_blank" class="px-8 py-4 border border-white text-white font-bold tracking-[0.2em] rounded hover:bg-white hover:text-black transition-colors text-center">
+                    <a href="https://www.instagram.com/ncu_tv?igsh=MXB4ZWV5bnQzdHNzNQ==" target="_blank"
+                        class="px-8 py-4 border border-white text-white font-bold tracking-[0.2em] rounded hover:bg-white hover:text-black transition-colors text-center">
                         INSTAGRAM (私訊我們)
                     </a>
                 </div>
@@ -394,15 +578,21 @@
         </div>
     </div>
 
-    <div id="modal-gear" class="fixed inset-0 modal-overlay z-[60] hidden flex items-center justify-center p-4" onclick="if(event.target === this) closeModal('modal-gear')">
-        <div class="bg-[#111] border border-white/20 w-full max-w-6xl max-h-[90vh] overflow-y-auto rounded-xl relative animate-slide-up modal-content">
-            <button onclick="closeModal('modal-gear')" class="absolute top-6 right-6 text-gray-500 hover:text-white p-2 hover:bg-white/10 rounded-full transition-colors z-50"><svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg></button>
+    <div id="modal-gear" class="fixed inset-0 modal-overlay z-[60] hidden flex items-center justify-center p-4"
+        onclick="if(event.target === this) closeModal('modal-gear')">
+        <div
+            class="bg-[#111] border border-white/20 w-full max-w-6xl max-h-[90vh] overflow-y-auto rounded-xl relative animate-slide-up modal-content">
+            <button onclick="closeModal('modal-gear')"
+                class="absolute top-6 right-6 text-gray-500 hover:text-white p-2 hover:bg-white/10 rounded-full transition-colors z-50"><svg
+                    class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg></button>
             <div class="p-10 md:p-16">
                 <h2 class="text-4xl font-black text-white tracking-tighter mb-2">器材軍火庫 (GEAR)</h2>
                 <p class="text-ncu-sub mb-10 border-l-4 border-ncu-accent pl-4 text-xl">工欲善其事，必先利其器。NCUTV 器材庫部分精選。</p>
-                
+
                 <div id="gear-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -440,34 +630,34 @@
 
 
         const GEAR_LIST = [
-            { 
-                name: "廣播級 4K 攝影機", 
-                enName: "Broadcast Camcorder", 
-                desc: "鎮台之寶。高畫質、大感光元件，大型轉播與棚內錄影的主力設備。", 
+            {
+                name: "廣播級 4K 攝影機",
+                enName: "Broadcast Camcorder",
+                desc: "鎮台之寶。高畫質、大感光元件，大型轉播與棚內錄影的主力設備。",
                 category: "CAMERA",
-                imgUrl: "https://drive.google.com/file/d/1YUVFXPAfCAm0V4aLkI2aBcxWr2B3PrTh/view?usp=sharing" 
+                imgUrl: "https://drive.google.com/file/d/1YUVFXPAfCAm0V4aLkI2aBcxWr2B3PrTh/view?usp=sharing"
             },
-            { 
-                name: "專業手持攝影機", 
-                enName: "Professional Handheld", 
-                desc: "機動性與專業功能兼具。適合外景採訪、活動紀錄的單兵作戰利器。", 
+            {
+                name: "專業手持攝影機",
+                enName: "Professional Handheld",
+                desc: "機動性與專業功能兼具。適合外景採訪、活動紀錄的單兵作戰利器。",
                 category: "CAMERA",
-                imgUrl: "https://drive.google.com/file/d/1GgCFHM45m5ni529448PbirhY--W54BvD/view?usp=sharing" 
+                imgUrl: "https://drive.google.com/file/d/1GgCFHM45m5ni529448PbirhY--W54BvD/view?usp=sharing"
             },
-            { 
-                name: "掌上型便攜攝影機", 
-                enName: "Compact Palm Camcorder", 
-                desc: "輕巧靈活 (Handycam)。適合長跟拍、Vlog 視角或作為特殊機位使用。", 
+            {
+                name: "掌上型便攜攝影機",
+                enName: "Compact Palm Camcorder",
+                desc: "輕巧靈活 (Handycam)。適合長跟拍、Vlog 視角或作為特殊機位使用。",
                 category: "CAMERA",
-                imgUrl: "https://drive.google.com/file/d/1W6Sj7H3ch7xg9MEd1unr5FeFqoBKzuwg/view?usp=drive_link" 
+                imgUrl: "https://drive.google.com/file/d/1W6Sj7H3ch7xg9MEd1unr5FeFqoBKzuwg/view?usp=drive_link"
             },
 
-            { 
-                name: "專業打光燈組", 
-                enName: "Lighting Kit", 
-                desc: "包含多種光源和補光板，無論棚內或外景都能營造專業質感。", 
+            {
+                name: "專業打光燈組",
+                enName: "Lighting Kit",
+                desc: "包含多種光源和補光板，無論棚內或外景都能營造專業質感。",
                 category: "LIGHT",
-                imgUrl: "https://drive.google.com/file/d/1er-w-4o3WO-XyV1H_d8PVVlIfNftNmxo/view?usp=drive_link" 
+                imgUrl: "https://drive.google.com/file/d/1er-w-4o3WO-XyV1H_d8PVVlIfNftNmxo/view?usp=drive_link"
             },
 
         ];
@@ -488,7 +678,7 @@
                     { date: "2025/11/25", title: "綠色行動，循環永續影片拍攝", type: "MISSION" },
                     { date: "2025/12/03", title: "綠色行動，循環永續影片 第一名", type: "AWARD" },
                     { date: "2025/12/11", title: "台灣混凝土學會年會拍照", type: "MISSION" },
-                    { date: "2025/12/12", title: "期末社大", type: "EVENT", url: "https://drive.google.com/file/d/1tRvS-G_Eztp3wvbAQzzRwSd02TqzUet7/view?usp=drive_link"  },
+                    { date: "2025/12/12", title: "期末社大", type: "EVENT", url: "https://drive.google.com/file/d/1tRvS-G_Eztp3wvbAQzzRwSd02TqzUet7/view?usp=drive_link" },
                     { date: "2026/03/14", title: "第五屆潛力種子盃影片", type: "MISSION" }
                 ],
                 classes: [
@@ -505,10 +695,10 @@
                 ],
                 works: [
                     { title: "「小題，才能大作」 (劍道社宣傳影片)", youtubeId: "YfgWGjOh6y4" },
-                    {title:" ",imageUrl:"https://www.ssu.org.tw/Uploads/NewsCover/EFA73803-67E6-4DA2-8E70-69B6C211E195.jpg"},
+                    { title: " ", imageUrl: "https://www.ssu.org.tw/Uploads/NewsCover/EFA73803-67E6-4DA2-8E70-69B6C211E195.jpg" },
                     { title: "得獎照", imageUrl: "https://drive.google.com/file/d/1yWNxzXlkUNtpNkKpiQVjsYE_pD8-JKCs/view?usp=sharing" },
                     { title: "2025社團博覽會預告片", youtubeId: "OgkhfOyr7p0" },
-                    { title: "TEDxNCU 年度大會轉播", youtubeId: "L4oLzrjBhEg",customThumb:"https://drive.google.com/file/d/1Vd8nFOx5TYxXrcyqQv0-JZRvqBi0kYCa/view?usp=drive_link" }
+                    { title: "TEDxNCU 年度大會轉播", youtubeId: "L4oLzrjBhEg", customThumb: "https://drive.google.com/file/d/1Vd8nFOx5TYxXrcyqQv0-JZRvqBi0kYCa/view?usp=drive_link" }
                 ],
                 allMembers: ["林承叡", "許雅茜", "游景雯", "陳沅和", "陳湘雯", "周志奇", "李宥寬", "黃翊茹", "李昕叡", "簡嘉鎂", "林彥伶", "游斯婷", "馮笠珊"]
             },
@@ -526,7 +716,7 @@
                     { date: "2025/05/06", title: "校長座談會直播", type: "MISSION" },
                     { date: "2025/05/24", title: "畢業典禮直播", type: "MISSION" },
                     { date: "2025/06", title: "諮商中心影片", type: "MISSION" },
-                    { date: "2025/06/16", title: "期末聚會", type: "EVENT"},
+                    { date: "2025/06/16", title: "期末聚會", type: "EVENT" },
                     { date: "2025/08/27", title: "新生營導播", type: "MISSION" }
                 ],
                 classes: [],
@@ -556,7 +746,7 @@
                     { date: "2024/05/25", title: "畢業典禮", type: "MISSION" }
                 ],
                 classes: [
-                    { date: "2023/12/03", title: "想像未來的台灣媒體，媒體素養與資訊識讀",lecturer: "方君竹老師"},
+                    { date: "2023/12/03", title: "想像未來的台灣媒體，媒體素養與資訊識讀", lecturer: "方君竹老師" },
                     { date: "2024/02/23", title: "導播機、攝影機複習" },
                     { date: "2024/02/27", title: "出隊分工討論" },
                     { date: "2024/03/05", title: "OBS模擬直播" },
@@ -573,15 +763,17 @@
             // { id: 13, year: "2022-2023", leader: "TBD", timeline: [], classes: [], works: [], allMembers: [] },
             // { id: 12, year: "2021-2022", leader: "TBD", timeline: [], classes: [], works: [], allMembers: [] },
             // { id: 10, year: "2019-2020", leader: "TBD", timeline: [], classes: [], works: [], allMembers: [] },
-            { id: 1, year: "2010-2011", leader: "創始屆", 
-            timeline: [
-                { date: "2010", title: "小中大電視台創立", type: "EVENT" }], 
-            classes: [], 
-            works: [
-                { title: "NCUTV 小中大新聞-人車爭道 百花川爭霸",imageUrl: "https://i.ytimg.com/vi/DKjWqYjunwU/hqdefault.jpg?sqp=-oaymwFBCNACELwBSFryq4qpAzMIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB8AEB-AHUBoAC4AOKAgwIABABGFUgZShUMA8=&rs=AOn4CLB0idwamUZcR_a8jRpalMjcivSjgA" },
-                { title: "NCUTV 小中大新聞-綠色腳踏車 環保新能量", imageUrl: "https://i.ytimg.com/vi/Lda3n_KJlz0/hqdefault.jpg?sqp=-oaymwEnCNACELwBSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLBCYdUCY1QSPSlzXXZ7wHutn_HTdQ" },
-                { title: "NCUTV 小中大新聞-中大風很大", imageUrl: "https://i.ytimg.com/vi/XI4LhuMVoQk/hqdefault.jpg?sqp=-oaymwFBCNACELwBSFryq4qpAzMIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB8AEB-AHUBoAC4AOKAgwIABABGEkgXChlMA8=&rs=AOn4CLDqSLBdeo0HmTZBQp7yYu4RNwHKLQ" }],    
-            allMembers: [] },
+            {
+                id: 1, year: "2010-2011", leader: "創始屆",
+                timeline: [
+                    { date: "2010", title: "小中大電視台創立", type: "EVENT" }],
+                classes: [],
+                works: [
+                    { title: "NCUTV 小中大新聞-人車爭道 百花川爭霸", imageUrl: "https://i.ytimg.com/vi/DKjWqYjunwU/hqdefault.jpg?sqp=-oaymwFBCNACELwBSFryq4qpAzMIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB8AEB-AHUBoAC4AOKAgwIABABGFUgZShUMA8=&rs=AOn4CLB0idwamUZcR_a8jRpalMjcivSjgA" },
+                    { title: "NCUTV 小中大新聞-綠色腳踏車 環保新能量", imageUrl: "https://i.ytimg.com/vi/Lda3n_KJlz0/hqdefault.jpg?sqp=-oaymwEnCNACELwBSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLBCYdUCY1QSPSlzXXZ7wHutn_HTdQ" },
+                    { title: "NCUTV 小中大新聞-中大風很大", imageUrl: "https://i.ytimg.com/vi/XI4LhuMVoQk/hqdefault.jpg?sqp=-oaymwFBCNACELwBSFryq4qpAzMIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB8AEB-AHUBoAC4AOKAgwIABABGEkgXChlMA8=&rs=AOn4CLDqSLBdeo0HmTZBQp7yYu4RNwHKLQ" }],
+                allMembers: []
+            },
         ];
 
         const viewGallery = document.getElementById('view-gallery');
@@ -593,7 +785,7 @@
 
         document.addEventListener('contextmenu', e => e.preventDefault());
 
-        document.onkeydown = function(e) {
+        document.onkeydown = function (e) {
             if (
                 e.keyCode === 123 || // F12
                 (e.ctrlKey && e.shiftKey && e.keyCode === 73) || // Ctrl+Shift+I
@@ -604,7 +796,7 @@
             }
         };
 
-        window.onpopstate = function(event) {
+        window.onpopstate = function (event) {
             if (!document.getElementById('modal-about').classList.contains('hidden')) {
                 closeModal('modal-about', true);
                 return;
@@ -621,14 +813,14 @@
 
         function openModal(modalId) {
             document.getElementById(modalId).classList.remove('hidden');
-            if(modalId === 'modal-gear') renderGear();
-            
-            history.pushState({modal: modalId}, null, '');
+            if (modalId === 'modal-gear') renderGear();
+
+            history.pushState({ modal: modalId }, null, '');
         }
 
         function closeModal(modalId, isBackNav = false) {
             document.getElementById(modalId).classList.add('hidden');
-            
+
             if (!isBackNav) {
                 history.back();
             }
@@ -636,8 +828,8 @@
 
         function renderGear() {
             const container = document.getElementById('gear-grid');
-            if(container.children.length > 0) return;
-            
+            if (container.children.length > 0) return;
+
             GEAR_LIST.forEach(item => {
                 const img = resolveImageUrl(item.imgUrl);
                 const div = document.createElement('div');
@@ -693,7 +885,7 @@
             const gen = generationsData.find(g => g.id === id);
             if (!gen) return;
 
-            history.pushState({view: 'detail', id: id}, null, '');
+            history.pushState({ view: 'detail', id: id }, null, '');
 
             document.getElementById('detail-vol').textContent = `第 ${gen.id} 屆`;
             document.getElementById('detail-year').textContent = gen.year;
@@ -759,7 +951,7 @@
                             <div class="font-mono text-ncu-accent text-lg tracking-wider font-bold">${item.date}</div>
                             <span class="text-sm font-bold px-3 py-1 rounded border ${badgeClass} tracking-wider">${item.type}</span>
                         </div>
-                        <h4 class="text-white text-3xl font-bold leading-tight group-hover:text-ncu-accent transition-colors">
+                        <h4 class="text-white text-xl md:text-3xl font-bold leading-tight group-hover:text-ncu-accent transition-colors">
                             ${item.url ? `<a href="${item.url}" target="_blank" class="hover:underline underline-offset-8 decoration-2">${item.title} ↗</a>` : item.title}
                         </h4>
                     </div>
@@ -794,7 +986,7 @@
                                 <div class="mt-5 text-xl font-bold text-white truncate group-hover:text-ncu-accent transition-colors">${work.title}</div>
                             </a>
                         `;
-                    } 
+                    }
                     else if (work.playlistId) {
                         const embedUrl = `https://www.youtube.com/embed/videoseries?list=${work.playlistId}`;
                         div.innerHTML = `
@@ -841,7 +1033,7 @@
                         <div class="flex justify-between items-start z-10">
                             <div class="flex items-center gap-4">
                                 <span class="text-ncu-sub font-mono text-base bg-white/10 px-3 py-1 rounded min-w-[70px] text-center">${c.date}</span>
-                                <h4 class="text-2xl font-bold text-gray-200 group-hover:text-white transition-colors">${c.title}</h4>
+                                <h4 class="text-xl md:text-2xl font-bold text-gray-200 group-hover:text-white transition-colors">${c.title}</h4>
                             </div>
                             
                             ${c.photoUrl ? `
@@ -885,11 +1077,4 @@
     </script>
 </body>
 
-
 </html>
-
-
-
-
-
-
