@@ -781,7 +781,7 @@
         const galleryGrid = document.getElementById('gallery-grid');
 
         // 設定首頁 Banner
-        document.getElementById('home-banner-img').src = SITE_CONFIG.bannerUrl;
+        document.getElementById('home-banner-img').src = resolveImageUrl(SITE_CONFIG.bannerUrl);
 
         document.addEventListener('contextmenu', e => e.preventDefault());
 
@@ -1078,6 +1078,7 @@
 </body>
 
 </html>
+
 
 
 
