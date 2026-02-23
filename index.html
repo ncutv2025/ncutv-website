@@ -231,14 +231,25 @@
             opacity: 1;
             transform: scale(1.05);
         }
+
+        .hidden {
+            display: none !important;
+        }
     </style>
 </head>
 
 <body class="antialiased selection:bg-ncu-accent selection:text-black">
 
+    <div id="loading-overlay" class="fixed inset-0 bg-[#050505] z-[100] flex items-center justify-center">
+        <div class="text-center">
+            <div class="w-16 h-16 border-4 border-ncu-accent/30 border-t-ncu-accent rounded-full animate-spin mb-6"></div>
+            <p class="text-ncu-sub font-mono tracking-widest">正在載入...</p>
+        </div>
+    </div>
+
     <div class="bg-noise"></div>
 
-    <main id="view-gallery" class="relative z-10 min-h-screen p-6 md:p-16 flex flex-col transition-all duration-700">
+    <main id="view-gallery" class="relative z-10 min-h-screen p-4 sm:p-6 md:p-12 lg:p-16 flex flex-col transition-all duration-700">
 
         <header class="mb-12 animate-slide-up">
             <div class="flex items-center justify-between mb-8">
@@ -262,21 +273,21 @@
                     class="hero-img opacity-60 group-hover:opacity-80 transition-opacity duration-700">
 
                 <div
-                    class="absolute inset-0 bg-gradient-to-r from-black via-black/50 to-transparent flex flex-col justify-center px-6 md:px-20">
+                    class="absolute inset-0 bg-gradient-to-r from-black via-black/50 to-transparent flex flex-col justify-center px-4 sm:px-8 md:px-16 lg:px-20">
                     <h1
-                        class="text-2xl md:text-9xl font-black text-white tracking-tighter leading-none mb-4 drop-shadow-2xl">
+                        class="text-3xl sm:text-5xl md:text-7xl lg:text-9xl font-black text-white tracking-tighter leading-tight sm:leading-none mb-4 drop-shadow-2xl">
                         小中大電視台
                     </h1>
                     <p
-                        class="text-ncu-sub text-lg md:text-2xl tracking-wide font-light border-l-4 border-ncu-accent pl-6">
+                        class="text-ncu-sub text-sm sm:text-base md:text-xl lg:text-2xl tracking-wide font-light border-l-4 border-ncu-accent pl-4 sm:pl-6">
                         一幀一畫，小中見大。
                     </p>
                 </div>
 
                 <div
-                    class="absolute bottom-6 left-6 right-6 md:left-auto md:bottom-12 md:right-12 z-20 flex flex-col md:flex-row gap-3 md:gap-4 items-stretch md:items-center">
+                    class="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6 md:left-auto md:bottom-12 md:right-12 z-20 flex flex-col gap-2 sm:gap-3 md:flex-row md:gap-4 items-stretch md:items-center">
                     <a href="https://www.surveycake.com/s/78noe" target="_blank"
-                        class="px-6 py-3 md:px-8 md:py-4 bg-white text-black font-bold tracking-[0.1em] rounded-full hover:bg-gray-200 hover:scale-105 transition-all shadow-[0_0_20px_rgba(255,255,255,0.4)] flex items-center justify-center gap-3">
+                        class="px-4 py-2 sm:px-6 sm:py-3 md:px-8 md:py-4 bg-white text-black font-bold tracking-[0.1em] rounded-full hover:bg-gray-200 hover:scale-105 transition-all shadow-[0_0_20px_rgba(255,255,255,0.4)] flex items-center justify-center gap-2 sm:gap-3 text-sm sm:text-base">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                             stroke="currentColor" class="w-5 h-5">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -287,7 +298,7 @@
 
                     <a href="https://docs.google.com/forms/d/e/1FAIpQLSfzCmAK9mto3YTna2X3imiQk5MGH3bAsGIXtL0ApUuh7DADhQ/viewform?usp=dialog"
                         target="_blank"
-                        class="px-8 py-3 md:px-10 md:py-4 bg-ncu-accent text-black font-black tracking-[0.15em] rounded-full hover:bg-white hover:scale-105 transition-all shadow-[0_0_20px_rgba(192,160,98,0.6)] flex items-center justify-center gap-3">
+                        class="px-5 py-2 sm:px-8 sm:py-3 md:px-10 md:py-4 bg-ncu-accent text-black font-black tracking-[0.15em] rounded-full hover:bg-white hover:scale-105 transition-all shadow-[0_0_20px_rgba(192,160,98,0.6)] flex items-center justify-center gap-2 sm:gap-3 text-xs sm:text-sm md:text-base">
                         <span>加入我們 (JOIN US)</span>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5"
                             stroke="currentColor" class="w-5 h-5">
@@ -298,9 +309,9 @@
                 </div>
             </div>
 
-            <div class="flex flex-wrap gap-4 animate-slide-up" style="animation-delay: 0.1s;">
+            <div class="flex flex-wrap gap-2 sm:gap-4 animate-slide-up" style="animation-delay: 0.1s;">
                 <button onclick="openModal('modal-about')"
-                    class="px-8 py-3 bg-white/5 border border-white/20 hover:border-ncu-accent hover:text-ncu-accent hover:bg-white/10 rounded-full transition-all tracking-[0.2em] font-bold text-sm uppercase flex items-center gap-2 group shadow-[0_0_15px_rgba(192,160,98,0.3)]">
+                    class="px-4 sm:px-8 py-2 sm:py-3 bg-white/5 border border-white/20 hover:border-ncu-accent hover:text-ncu-accent hover:bg-white/10 rounded-full transition-all tracking-[0.2em] font-bold text-xs sm:text-sm uppercase flex items-center gap-2 group shadow-[0_0_15px_rgba(192,160,98,0.3)]">
                     <svg class="w-4 h-4 group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -309,7 +320,7 @@
                     關於我們
                 </button>
                 <button onclick="openModal('modal-gear')"
-                    class="px-8 py-3 bg-white/5 border border-white/20 hover:border-ncu-accent hover:text-ncu-accent hover:bg-white/10 rounded-full transition-all tracking-[0.2em] font-bold text-sm uppercase flex items-center gap-2 group">
+                    class="px-4 sm:px-8 py-2 sm:py-3 bg-white/5 border border-white/20 hover:border-ncu-accent hover:text-ncu-accent hover:bg-white/10 rounded-full transition-all tracking-[0.2em] font-bold text-xs sm:text-sm uppercase flex items-center gap-2 group">
                     <svg class="w-4 h-4 group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -322,10 +333,10 @@
             </div>
         </header>
 
-        <h3 class="text-ncu-sub text-sm font-bold tracking-[0.2em] uppercase mb-6 pl-2 border-l-2 border-ncu-sub">歷屆傳承
+        <h3 class="text-ncu-sub text-xs sm:text-sm font-bold tracking-[0.2em] uppercase mb-4 sm:mb-6 pl-2 border-l-2 border-ncu-sub">歷屆傳承
             (Legacy)</h3>
         <div id="gallery-grid"
-            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12 w-full pb-20">
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-8 md:gap-10 lg:gap-12 w-full pb-20">
         </div>
 
         <footer class="mt-auto pt-20 border-t border-white/10 bg-[#0a0a0a]">
@@ -438,61 +449,61 @@
             <div class="text-ncu-accent font-bold tracking-widest text-xl">NCUTV</div>
         </nav>
 
-        <div class="container mx-auto px-6 md:px-12 pt-48 pb-40 relative z-10">
-            <header class="mb-40 grid grid-cols-1 lg:grid-cols-12 gap-20 items-end border-b border-white/10 pb-24">
+        <div class="container mx-auto px-4 sm:px-6 md:px-12 pt-32 md:pt-40 lg:pt-48 pb-20 md:pb-40 relative z-10">
+            <header class="mb-16 md:mb-32 lg:mb-40 grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 lg:gap-20 items-end border-b border-white/10 pb-12 md:pb-16 lg:pb-24">
                 <div class="lg:col-span-7">
-                    <span class="text-ncu-red font-mono text-lg tracking-widest mb-8 flex items-center gap-4">
+                    <span class="text-ncu-red font-mono text-sm md:text-base lg:text-lg tracking-widest mb-4 md:mb-8 flex items-center gap-4">
                         <span class="w-4 h-4 bg-ncu-red rounded-full animate-pulse shadow-[0_0_20px_#e11d48]"></span>
                         PROJECT FILE
                     </span>
                     <h2 id="detail-vol"
-                        class="text-4xl md:text-huge font-black text-white leading-none tracking-tighter -ml-2 mb-6 drop-shadow-2xl">
+                        class="text-3xl sm:text-5xl md:text-6xl lg:text-huge font-black text-white leading-tight sm:leading-none tracking-tighter -ml-2 mb-4 md:mb-6 drop-shadow-2xl">
                         VOL.16</h2>
-                    <h3 id="detail-year" class="text-2xl md:text-6xl text-ncu-sub font-mono font-light">2025-2026</h3>
+                    <h3 id="detail-year" class="text-lg sm:text-2xl md:text-4xl lg:text-6xl text-ncu-sub font-mono font-light">2025-2026</h3>
                 </div>
-                <div class="lg:col-span-5 lg:pl-12">
+                <div class="lg:col-span-5 lg:pl-8 xl:pl-12">
                     <h4
-                        class="text-ncu-accent text-lg font-bold tracking-[0.3em] uppercase mb-10 border-l-4 border-ncu-accent pl-6">
+                        class="text-ncu-accent text-sm md:text-base lg:text-lg font-bold tracking-[0.3em] uppercase mb-6 md:mb-10 border-l-4 border-ncu-accent pl-4 md:pl-6">
                         製作團隊 (Crew)</h4>
                     <p id="detail-leader"
-                        class="text-white text-xl md:text-3xl leading-relaxed whitespace-pre-line font-light">
+                        class="text-white text-lg md:text-2xl lg:text-3xl leading-relaxed whitespace-pre-line font-light">
                     </p>
                 </div>
             </header>
 
-            <div class="grid grid-cols-1 xl:grid-cols-12 gap-24">
+            <div class="grid grid-cols-1 xl:grid-cols-12 gap-8 md:gap-16 lg:gap-24">
                 <div class="xl:col-span-7">
                     <h3
-                        class="text-xl md:text-3xl font-bold text-white tracking-widest uppercase mb-16 flex items-center gap-5">
-                        <svg class="w-8 h-8 text-ncu-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        class="text-lg md:text-2xl lg:text-3xl font-bold text-white tracking-widest uppercase mb-8 md:mb-16 flex items-center gap-3 md:gap-5">
+                        <svg class="w-6 h-6 md:w-8 md:h-8 text-ncu-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                         年度大事記 (Timeline)
                     </h3>
-                    <div class="relative pl-4">
-                        <div class="timeline-line"></div>
+                    <div class="relative pl-2 md:pl-4">
+                        <div class="timeline-line" style="left: 16px"></div>
                         <div id="timeline-list"></div>
                     </div>
                 </div>
-                <div class="xl:col-span-5 space-y-32">
+                <div class="xl:col-span-5 space-y-12 md:space-y-20 lg:space-y-32">
                     <div id="section-works" class="hidden">
                         <h3
                             class="text-lg font-bold text-ncu-sub tracking-[0.3em] uppercase mb-10 border-b border-white/10 pb-4">
                             精選作品 (Works)</h3>
-                        <div id="works-grid" class="grid gap-12"></div>
+                        <div id="works-grid" class="grid gap-6 md:gap-8 lg:gap-12"></div>
                     </div>
                     <div id="section-classes" class="hidden">
                         <h3
                             class="text-lg font-bold text-ncu-sub tracking-[0.3em] uppercase mb-10 border-b border-white/10 pb-4">
                             社課紀錄 (Classes)</h3>
-                        <div id="classes-list" class="space-y-6"></div>
+                        <div id="classes-list" class="space-y-4 md:space-y-6"></div>
                     </div>
                     <div>
                         <h3
                             class="text-lg font-bold text-ncu-sub tracking-[0.3em] uppercase mb-10 border-b border-white/10 pb-4">
                             成員名單 (Crew List)</h3>
-                        <div id="members-list" class="flex flex-wrap gap-4"></div>
+                        <div id="members-list" class="flex flex-wrap gap-2 sm:gap-3 md:gap-4"></div>
                     </div>
                 </div>
             </div>
@@ -508,69 +519,69 @@
                     class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                 </svg></button>
-            <div class="p-10 md:p-16">
-                <div class="text-center mb-16">
-                    <h3 class="text-ncu-accent text-sm font-bold tracking-[0.4em] uppercase mb-6">Manifesto</h3>
-                    <h2 class="text-3xl md:text-5xl font-black text-white mb-6 leading-tight">
+            <div class="p-6 sm:p-8 md:p-12 lg:p-16">
+                <div class="text-center mb-12 md:mb-16">
+                    <h3 class="text-ncu-accent text-xs sm:text-sm font-bold tracking-[0.4em] uppercase mb-4 md:mb-6">Manifesto</h3>
+                    <h2 class="text-2xl sm:text-3xl md:text-5xl font-black text-white mb-6 leading-tight">
                         實戰導向。<br>敘事與意象並重。<br>小題，才能大作。</h2>
                     <div class="w-24 h-1 bg-ncu-red mx-auto"></div>
                 </div>
 
-                <div class="mb-16">
+                <div class="mb-12 md:mb-16">
                     <h3
-                        class="text-ncu-accent text-sm font-bold tracking-[0.2em] uppercase mb-6 border-l-4 border-ncu-accent pl-4">
+                        class="text-ncu-accent text-xs sm:text-sm font-bold tracking-[0.2em] uppercase mb-4 md:mb-6 border-l-4 border-ncu-accent pl-4">
                         What We Do</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
                         <div
-                            class="bg-white/5 p-6 rounded-lg border border-white/5 hover:border-ncu-accent/30 transition-colors">
-                            <h4 class="text-white font-bold text-xl mb-2 flex items-center gap-2">🎬 企劃導演</h4>
-                            <p class="text-ncu-sub text-sm">腳本發想、分鏡繪製、影片風格定調。</p>
+                            class="bg-white/5 p-4 sm:p-6 rounded-lg border border-white/5 hover:border-ncu-accent/30 transition-colors">
+                            <h4 class="text-white font-bold text-base md:text-xl mb-2 flex items-center gap-2">🎬 企劃導演</h4>
+                            <p class="text-ncu-sub text-xs sm:text-sm">腳本發想、分鏡繪製、影片風格定調。</p>
                         </div>
                         <div
-                            class="bg-white/5 p-6 rounded-lg border border-white/5 hover:border-ncu-accent/30 transition-colors">
-                            <h4 class="text-white font-bold text-xl mb-2 flex items-center gap-2">🎥 攝影燈光</h4>
-                            <p class="text-ncu-sub text-sm">專業攝影機操作、運鏡構圖、現場光影佈置。</p>
+                            class="bg-white/5 p-4 sm:p-6 rounded-lg border border-white/5 hover:border-ncu-accent/30 transition-colors">
+                            <h4 class="text-white font-bold text-base md:text-xl mb-2 flex items-center gap-2">🎥 攝影燈光</h4>
+                            <p class="text-ncu-sub text-xs sm:text-sm">專業攝影機操作、運鏡構圖、現場光影佈置。</p>
                         </div>
                         <div
-                            class="bg-white/5 p-6 rounded-lg border border-white/5 hover:border-ncu-accent/30 transition-colors">
-                            <h4 class="text-white font-bold text-xl mb-2 flex items-center gap-2">🖥️ 後製剪輯</h4>
-                            <p class="text-ncu-sub text-sm">Davinci剪輯、調色與音效。</p>
+                            class="bg-white/5 p-4 sm:p-6 rounded-lg border border-white/5 hover:border-ncu-accent/30 transition-colors">
+                            <h4 class="text-white font-bold text-base md:text-xl mb-2 flex items-center gap-2">🖥️ 後製剪輯</h4>
+                            <p class="text-ncu-sub text-xs sm:text-sm">Davinci剪輯、調色與音效。</p>
                         </div>
                         <div
-                            class="bg-white/5 p-6 rounded-lg border border-white/5 hover:border-ncu-accent/30 transition-colors">
-                            <h4 class="text-white font-bold text-xl mb-2 flex items-center gap-2">📡 現場導播</h4>
-                            <p class="text-ncu-sub text-sm">大型活動多機轉播、OBS 直播串流設定。</p>
+                            class="bg-white/5 p-4 sm:p-6 rounded-lg border border-white/5 hover:border-ncu-accent/30 transition-colors">
+                            <h4 class="text-white font-bold text-base md:text-xl mb-2 flex items-center gap-2">📡 現場導播</h4>
+                            <p class="text-ncu-sub text-xs sm:text-sm">大型活動多機轉播、OBS 直播串流設定。</p>
                         </div>
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-                    <div class="bg-white/5 p-6 rounded-lg border border-white/5">
-                        <h4 class="text-ncu-accent font-bold mb-3 text-lg">Q: 我沒有單眼相機可以加入嗎？</h4>
-                        <p class="text-gray-300">A: 可以的！社團有完整器材庫供你使用。</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-3 md:gap-4 mb-12 md:mb-16">
+                    <div class="bg-white/5 p-4 sm:p-6 rounded-lg border border-white/5">
+                        <h4 class="text-ncu-accent font-bold mb-3 text-base md:text-lg">Q: 我沒有單眼相機可以加入嗎？</h4>
+                        <p class="text-gray-300 text-sm">A: 可以的！社團有完整器材庫供你使用。</p>
                     </div>
-                    <div class="bg-white/5 p-6 rounded-lg border border-white/5">
-                        <h4 class="text-ncu-accent font-bold mb-3 text-lg">Q: 會不會很花時間？</h4>
-                        <p class="text-gray-300">A: 我們是專案制，想接就接，不強迫出隊。</p>
+                    <div class="bg-white/5 p-4 sm:p-6 rounded-lg border border-white/5">
+                        <h4 class="text-ncu-accent font-bold mb-3 text-base md:text-lg">Q: 會不會很花時間？</h4>
+                        <p class="text-gray-300 text-sm">A: 我們是專案制，想接就接，不強迫出隊。</p>
                     </div>
-                    <div class="bg-white/5 p-6 rounded-lg border border-white/5">
-                        <h4 class="text-ncu-accent font-bold mb-3 text-lg">Q: 只有大一能加嗎？</h4>
-                        <p class="text-gray-300">A: 歡迎各年級老屁股。</p>
+                    <div class="bg-white/5 p-4 sm:p-6 rounded-lg border border-white/5">
+                        <h4 class="text-ncu-accent font-bold mb-3 text-base md:text-lg">Q: 只有大一能加嗎？</h4>
+                        <p class="text-gray-300 text-sm">A: 歡迎各年級老屁股。</p>
                     </div>
-                    <div class="bg-white/5 p-6 rounded-lg border border-white/5">
-                        <h4 class="text-ncu-accent font-bold mb-3 text-lg">Q: 沒有基礎怎麼辦？</h4>
-                        <p class="text-gray-300">A: 很多學長姐也是從零開始的喔~ 大家也很願意幫忙，不懂的就問。</p>
+                    <div class="bg-white/5 p-4 sm:p-6 rounded-lg border border-white/5">
+                        <h4 class="text-ncu-accent font-bold mb-3 text-base md:text-lg">Q: 沒有基礎怎麼辦？</h4>
+                        <p class="text-gray-300 text-sm">A: 很多學長姐也是從零開始的喔~ 大家也很願意幫忙，不懂的就問。</p>
                     </div>
                 </div>
 
-                <div class="flex flex-col md:flex-row gap-6 justify-center">
+                <div class="flex flex-col gap-3 sm:gap-4 md:gap-6 md:flex-row justify-center">
                     <a href="https://docs.google.com/forms/d/e/1FAIpQLSfzCmAK9mto3YTna2X3imiQk5MGH3bAsGIXtL0ApUuh7DADhQ/viewform?usp=dialog"
                         target="_blank"
-                        class="px-8 py-4 bg-ncu-accent text-black font-bold tracking-[0.2em] rounded hover:bg-white transition-colors text-center shadow-lg shadow-ncu-accent/20">
+                        class="px-6 sm:px-8 py-3 sm:py-4 bg-ncu-accent text-black font-bold tracking-[0.2em] rounded hover:bg-white transition-colors text-center text-sm md:text-base shadow-lg shadow-ncu-accent/20">
                         JOIN THE CREW (填寫表單)
                     </a>
                     <a href="https://www.instagram.com/ncu_tv?igsh=MXB4ZWV5bnQzdHNzNQ==" target="_blank"
-                        class="px-8 py-4 border border-white text-white font-bold tracking-[0.2em] rounded hover:bg-white hover:text-black transition-colors text-center">
+                        class="px-6 sm:px-8 py-3 sm:py-4 border border-white text-white font-bold tracking-[0.2em] rounded hover:bg-white hover:text-black transition-colors text-center text-sm md:text-base">
                         INSTAGRAM (私訊我們)
                     </a>
                 </div>
@@ -587,11 +598,11 @@
                     class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                 </svg></button>
-            <div class="p-10 md:p-16">
-                <h2 class="text-4xl font-black text-white tracking-tighter mb-2">器材軍火庫 (GEAR)</h2>
-                <p class="text-ncu-sub mb-10 border-l-4 border-ncu-accent pl-4 text-xl">工欲善其事，必先利其器。NCUTV 器材庫部分精選。</p>
+            <div class="p-6 sm:p-8 md:p-12 lg:p-16">
+                <h2 class="text-2xl sm:text-3xl md:text-4xl font-black text-white tracking-tighter mb-2">器材軍火庫 (GEAR)</h2>
+                <p class="text-ncu-sub mb-6 md:mb-10 border-l-4 border-ncu-accent pl-4 text-sm md:text-base lg:text-xl">工欲善其事，必先利其器。NCUTV 器材庫部分精選。</p>
 
-                <div id="gear-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div id="gear-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
                 </div>
             </div>
         </div>
@@ -600,6 +611,7 @@
     <script>
         const SITE_CONFIG = {
             bannerUrl: "https://drive.google.com/file/d/1zNHRpIEbcwhYkPEL_R56Mn8kU9bhg5oL/view?usp=drive_link",
+            mobileBannerUrl: "https://drive.google.com/file/d/12gfI2PHdzl_pUcqO5wV0ZqioU2UjfYuc/view?usp=drive_link",
         };
 
         const IMAGE_ASSETS = {
@@ -780,8 +792,16 @@
         const viewDetail = document.getElementById('view-detail');
         const galleryGrid = document.getElementById('gallery-grid');
 
-        // 設定首頁 Banner
-        document.getElementById('home-banner-img').src = resolveImageUrl(SITE_CONFIG.bannerUrl);
+        // 設定首頁 Banner - 根據螢幕寬度選擇不同的banner
+        function updateBanner() {
+            const bannerImg = document.getElementById('home-banner-img');
+            const isMobile = window.innerWidth < 768; // md breakpoint
+            const bannerUrl = isMobile ? SITE_CONFIG.mobileBannerUrl : SITE_CONFIG.bannerUrl;
+            bannerImg.src = resolveImageUrl(bannerUrl);
+        }
+        
+        updateBanner();
+        window.addEventListener('resize', updateBanner);
 
         document.addEventListener('contextmenu', e => e.preventDefault());
 
@@ -1072,13 +1092,77 @@
             }
         }
 
+        // 圖片預加載函數
+        function preloadImages() {
+            const imagesToLoad = [];
+            
+            // 添加banner圖片
+            imagesToLoad.push(resolveImageUrl(SITE_CONFIG.bannerUrl));
+            if (SITE_CONFIG.mobileBannerUrl) {
+                imagesToLoad.push(resolveImageUrl(SITE_CONFIG.mobileBannerUrl));
+            }
+            
+            // 添加gallery卡片圖片
+            Object.values(IMAGE_ASSETS).forEach(url => {
+                if (url) imagesToLoad.push(resolveImageUrl(url));
+            });
+            
+            // 添加gear圖片
+            GEAR_LIST.forEach(gear => {
+                if (gear.imgUrl) imagesToLoad.push(resolveImageUrl(gear.imgUrl));
+            });
+            
+            // 去重
+            const uniqueImages = [...new Set(imagesToLoad)];
+            let loadedCount = 0;
+            
+            if (uniqueImages.length === 0) {
+                hideLoadingOverlay();
+                return;
+            }
+            
+            // 為每個圖片創建Image object並監聽load事件
+            uniqueImages.forEach(imgUrl => {
+                const img = new Image();
+                img.onload = () => {
+                    loadedCount++;
+                    if (loadedCount === uniqueImages.length) {
+                        hideLoadingOverlay();
+                    }
+                };
+                img.onerror = () => {
+                    loadedCount++;
+                    if (loadedCount === uniqueImages.length) {
+                        hideLoadingOverlay();
+                    }
+                };
+                img.src = imgUrl;
+            });
+            
+            // 設定超時：10秒後自動隱藏loading（防止某些圖片永無法加載）
+            setTimeout(() => {
+                hideLoadingOverlay();
+            }, 10000);
+        }
+        
+        function hideLoadingOverlay() {
+            const loadingOverlay = document.getElementById('loading-overlay');
+            if (loadingOverlay && !loadingOverlay.classList.contains('hidden')) {
+                loadingOverlay.style.opacity = '0';
+                loadingOverlay.style.transition = 'opacity 0.5s ease-out';
+                setTimeout(() => {
+                    loadingOverlay.classList.add('hidden');
+                }, 500);
+            }
+        }
+
         initGallery();
+        preloadImages();
 
     </script>
 </body>
 
 </html>
-
 
 
 
